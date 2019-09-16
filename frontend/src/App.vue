@@ -1,0 +1,28 @@
+<template>
+    <div id="app">
+        <Header/>
+        <router-view/>
+    </div>
+</template>
+
+<script>
+import Header from '@/components/Header.vue'
+    export default {
+        name: 'app',
+        components: {
+            Header
+        }
+    }
+</script>
+
+<style>
+    body {
+        background-color: white;
+        padding-top: 0px;
+        padding-bottom: 50px;
+    }
+
+    .is-danger {
+        color: #9f3a38;
+    }
+</style>
