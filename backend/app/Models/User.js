@@ -35,10 +35,6 @@ class User extends Model {
     return this.hasMany('App/Models/Token')
   }
 
-  roles () {
-    return this.belongsTo('App/Models/Role')
-  }
-
   codewords () {
     
   }
