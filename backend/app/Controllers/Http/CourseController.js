@@ -27,29 +27,41 @@ class CourseController {
             data: course
           })
       }
-    
-      async show({ request, response, params: { id } }) {
-        const { project } = request.post()
-    
-        const tags = await project.tags().fetch()
-    
-        project.tags = tags
-    
+
+      async destroy({ request, response, params: { id } }) {
+        // await Course.find(request.input('name')).delete()
+        const course = await Course.find(id)
+        course.delete()
         response.status(200).json({
-          message: 'Here is your project.',
-          data: project
+          message: 'Successfully deleted this course.',
+          data: course
         })
       }
     
-      async update({ request, response }) {
-        const data = request.only(['course_name', 'startDate', 'endDate', 'presurveylink', 'postsurveylink', 'codewordAssignStatus'])
+      async show({ request, response, params: { id } }) {
+        const course = await Course.find(id)
         
-        course.course_name = course_name || course.course_name
-        course.startDate = startDate || course.startDate
-        course.endDate = endDate || course.endDate
-        course.presurveylink = presurveylink || course.presurveylink
-        course.postsurveylink = postsurveylink || course.postsurveylink
-        course.codewordAssignStatus = codewordAssignStatus || course.codewordAssignStatus
+        // const tags = await project.tags().fetch()
+    
+        // project.tags = tags
+    
+        response.status(200).json({
+          message: 'Here is your course.',
+          data: course
+        })
+      }
+    
+      async update({ request, response, params }) {
+        const data = request.all()
+
+        let course = Course.find(params.id)
+        
+        course.course_name = data.course_name || course.course_name
+        course.startDate = data.startDate || course.startDate
+        course.endDate = data.endDate || course.endDate
+        course.presurveylink = data.presurveylink || course.presurveylink
+        course.postsurveylink = data.postsurveylink || course.postsurveylink
+        course.codewordAssignStatus = data.codewordAssignStatus || course.codewordAssignStatus
     
         await course.save()
     
@@ -65,15 +77,7 @@ class CourseController {
         })
       }
     
-      async delete({ request, response, params: { id } }) {
-        const { course } = request.post()
-        await course.delete()
-    
-        response.status(200).json({
-          message: 'Successfully deleted this course.',
-          deleted: true
-        })
-      }
+
 }
 
 module.exports = CourseController
