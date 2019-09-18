@@ -32,7 +32,8 @@ export default new Router({
     },
     {
       path: '/InsDash',
-      component: Instructor
+      component: Instructor,
+      props: true
     },
     {
       path: '/Student',

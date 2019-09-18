@@ -98,7 +98,7 @@ export default {
             })
             .then(response => {
                 // redirect to user home
-                this.$router.push('/')
+                this.$router.push('/InsDash')
             })
             .catch(error => {
                 // clear form inputs
