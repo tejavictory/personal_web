@@ -4,7 +4,7 @@ const User = use('App/Models/User')
 
 class UserController {
     async signup ({ request, auth, response }) {
-        const userData = request.only(['name', 'username', 'email', 'password', 'firstname', 'lastname'])    
+        const userData = request.only(['username', 'email', 'password', 'firstname', 'lastname', 'role_name'])    
         try {
             const user = await User.create(userData)
             const token = await auth.generate(user)
@@ -16,7 +16,7 @@ class UserController {
         } catch (error) {
             return response.status(400).json({
                 status: 'error',
-                message: 'There was a problem creating the user, please try again later.'
+                message: 'There was a problem creating the user, please try again later.' + error
             })
         }
     }
@@ -39,6 +39,18 @@ class UserController {
             })
         }
     }
+
+    async getCourses({ request, response, params: {id} }) {
+        const email = request.input('email')
+        const user = await User.find(email)
+        const courses = await user.courses().fetch()
+        user.courses = courses
+    
+        response.status(200).json({
+          message: 'Here are your courses.',
+          data: courses
+        })
+      }
 }
 
 module.exports = UserController

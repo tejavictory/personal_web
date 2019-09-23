@@ -14,14 +14,16 @@ class CourseController {
     
       async store({ request, response }) {
         const data = request.only(['course_name', 'startDate', 'endDate', 'presurveylink', 'postsurveylink', 'codewordAssignStatus'])
-    
+        const users = request.input('users')
         const course = await Course.create(data)
-    
-        // if (tags && tags.length > 0) {
-        //   await project.tags().attach(tags)
-        //   project.tags = await project.tags().fetch()
-        // }
         await course.save()
+        // const { course_name, startDate, endDate, presurveylink, postsurveylink, codewordAssignStatus, users } = request.post()
+        // const course = await Course.create({ course_name, startDate, endDate, presurveylink, postsurveylink, codewordAssignStatus })
+
+        if (users && users.length > 0) {
+          await course.users().attach(users)
+          course.users = await course.users().fetch()
+        }
         response.status(200).json({
             message: 'Done adding course.',
             data: course
@@ -40,10 +42,10 @@ class CourseController {
     
       async show({ request, response, params: { id } }) {
         const course = await Course.find(id)
-        
-        // const tags = await project.tags().fetch()
     
-        // project.tags = tags
+        const users = await course.users().fetch()
+    
+        course.users = users
     
         response.status(200).json({
           message: 'Here is your course.',
@@ -51,25 +53,24 @@ class CourseController {
         })
       }
     
-      async update({ request, response, params }) {
-        const data = request.all()
+      async update({ request, response, params: { id } }) {
+        const data = request.post()
 
-        let course = Course.find(params.id)
+        var course = Course.find(id)
         
-        course.course_name = data.course_name || course.course_name
-        course.startDate = data.startDate || course.startDate
-        course.endDate = data.endDate || course.endDate
-        course.presurveylink = data.presurveylink || course.presurveylink
-        course.postsurveylink = data.postsurveylink || course.postsurveylink
-        course.codewordAssignStatus = data.codewordAssignStatus || course.codewordAssignStatus
-    
+        course.course_name = data.course_name
+        course.startDate = data.startDate
+        course.endDate = data.endDate
+        course.presurveylink = data.presurveylink
+        course.postsurveylink = data.postsurveylink
+        course.codewordAssignStatus = data.codewordAssignStatus
         await course.save()
     
-        // if (tags && tags.length > 0) {
-        //   await project.tags().detach()
-        //   await project.tags().attach(tags)
-        //   project.tags = await project.tags().fetch()
-        // }
+        if (users && users.length > 0) {
+          await course.users().detach()
+          await course.users().attach(users)
+          course.users = await course.users().fetch()
+        }
     
         response.status(200).json({
           message: 'Successfully updated this course.',

@@ -35,6 +35,10 @@ class User extends Model {
     return this.hasMany('App/Models/Token')
   }
 
+  static get primaryKey () {
+    return 'email'
+  }
+
   codewords () {
     
   }
@@ -44,7 +48,7 @@ class User extends Model {
   }
 
   courses () {
-    return this.belongsToMany('App/Models/Course').pivotTable('user_course')
+    return this.belongsToMany('App/Models/Course','email','course_id').pivotTable('user_course')
   }
 }
 

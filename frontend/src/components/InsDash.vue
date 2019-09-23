@@ -11,12 +11,14 @@
             />
         </div>
         <CourseModal/>
+        <EditCourse/>
     </div>
 </template>
 
 <script>
 import InsCourse from './InsCourse.vue'
 import CourseModal from './CourseModal.vue'
+import EditCourse from './EditCourse.vue'
 
 export default {
     name: 'InsDash',
@@ -27,18 +29,20 @@ export default {
     },
     components: {
         InsCourse,
-        CourseModal
+        CourseModal,
+        EditCourse
     },
     mounted:function() {
         this.fetchCourses()
     },
     methods: {
         showModal: function() {
-            $('.ui.modal').modal('show')
+            $('#createCourse').modal('show')
         },
         fetchCourses() {
             axios.get('/courses').then(response => {
-                    this.courses = response.data.data
+                this.$store.commit('changeCourses',response.data.data)
+                this.courses = response.data.data
             })
         }
     }

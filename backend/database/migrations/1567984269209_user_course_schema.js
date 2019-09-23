@@ -6,10 +6,9 @@ const Schema = use('Schema')
 class UserCourseSchema extends Schema {
   up () {
     this.create('user_course', (table) => {
-      table.increments()
-      table.integer('user_id').unsigned().index('user_id')
+      table.string('email',80).index('email')
       table.integer('course_id').unsigned().index('course_id')
-      table.foreign('user_id').references('users.id').onDelete('cascade')
+      table.foreign('email').references('users.email').onDelete('cascade')
       table.foreign('course_id').references('courses.id').onDelete('cascade')
     })
   }

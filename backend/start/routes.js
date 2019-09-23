@@ -28,3 +28,6 @@ Route.post('/delcourse/:id', 'CourseController.destroy')
 Route.post('/showcourse/:id', 'CourseController.show')
 Route.get('/courses', 'CourseController.index')
 Route.put('/courseupdate/:id', 'CourseController.update')
+
+Route.get('/usercourses', 'UserController.getCourses')
+

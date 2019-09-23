@@ -4,10 +4,10 @@
     Codeword App
   </div>
     <a class="item" v-on:click="setActive('insdash')" :class="{ active: isActive('insdash') }">
-          Instructor Dashboard
+          <router-link to="/InsDash"> Instructor Dashboard </router-link>
     </a>
     <a class="item" v-on:click="setActive('studash')" :class="{ active: isActive('studash') }">
-      Student Dashboard
+          <router-link to="/InsStu"> Student Dashboard </router-link>
     </a>
   <div class="right menu">
     <a class="item">
@@ -40,5 +40,7 @@ export default {
 </script>
 
 <style scoped>
-
+*{
+  color: black;
+}
 </style>

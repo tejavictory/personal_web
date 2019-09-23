@@ -4,7 +4,7 @@
     <h2> Routes </h2>
     <a href="http://localhost:8080/#/login">Login</a><br/>
     <a href="http://localhost:8080/#/signup">Sign Up</a><br/>
-    <a href="http://localhost:8080/#/InsDash">Instructor Dashboard</a><br/>
+    <a href="http://localhost:8080/#/Instructor">Instructor Dashboard</a><br/>
     <a href="http://localhost:8080/#/Student">Student Dashboard</a><br/>
     <a href="http://localhost:8080/#/Login">Login</a><br/>
     <a href="http://localhost:8080/#/Login">Login</a><br/>

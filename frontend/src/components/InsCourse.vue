@@ -3,10 +3,10 @@
             <div class="ui fluid card">
                 <div class="content">
                     <label>{{ course.course_name }}</label> 
-                    <button class="ui icon button">
+                    <button class="ui icon button" v-on:click="delCourse">
                         <i class="trash alternate outline icon"></i>
                     </button>
-                    <button class="ui icon button">
+                    <button class="ui icon button" v-on:click="updateCourse">
                         <i class="edit outline icon"></i>
                     </button>
                      
@@ -34,7 +34,25 @@ export default {
             type: Object,
             required: true
         }
+    },
+    methods: {
+        delCourse() {
+            axios.post('/delcourse/'+this.course.id,{params: {id: this.course.id}
+            })
+            .then(response => {
+                // redirect to user home
+                // this.$router.push('/InsDash')
+                this.$router.go()
+            })
+            .catch(error => { 
+            })   
+        },
+        updateCourse() {
+            this.$store.commit('changeCourse',this.course)
+            // $('#editCourse').modal('show')
+        }
     }    
+
 }
 </script>
 

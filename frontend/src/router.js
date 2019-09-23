@@ -7,7 +7,8 @@ import ResetPassword from '@/components/Auth/ResetPassword'
 import Instructor from '@/components/Instructor'
 import Student from '@/components/Student'
 import Admin from '@/components/Admin'
-
+import InsStu from '@/components/InsStu'
+import InsDash from '@/components/InsDash'
 
 Vue.use(Router)
 
@@ -31,9 +32,19 @@ export default new Router({
       component: ResetPassword
     },
     {
-      path: '/InsDash',
+      path: '/Instructor',
       component: Instructor,
-      props: true
+      props: true,
+      children: [
+        {
+          path: '/InsStu',
+          component: InsStu
+        },
+        {
+          path: '/InsDash',
+          component: InsDash
+        }
+      ]
     },
     {
       path: '/Student',

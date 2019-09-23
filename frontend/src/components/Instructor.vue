@@ -1,19 +1,21 @@
 <template>
     <div>
         <InsNav/>
-        <InsDash/>
+        <router-view/>
     </div>
 </template>
 
 <script>
 import InsNav from './InsNav.vue'
 import InsDash from './InsDash.vue'
+import InsStu from './InsStu.vue'
 
 export default {
     name: 'Instructor',
     components: {
         InsNav,
-        InsDash
+        InsDash,
+        InsStu
     }
 }
 </script>
