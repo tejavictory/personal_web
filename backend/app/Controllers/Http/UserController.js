@@ -3,6 +3,15 @@
 const User = use('App/Models/User')
 
 class UserController {
+    async index ({ request, auth, response }) {
+        const users = await User.all()
+
+        response.status(200).json({
+            message: 'Here are your users.',
+            data: users
+        })
+    }
+
     async signup ({ request, auth, response }) {
         const userData = request.only(['username', 'email', 'password', 'firstname', 'lastname', 'role_name'])    
         try {
@@ -50,7 +59,20 @@ class UserController {
           message: 'Here are your courses.',
           data: courses
         })
-      }
+    }
+
+    async me ({ auth, response }) {
+        const user = await User.query()
+            .where('id', auth.current.user.id)
+            .firstOrFail()
+    
+        return response.json({
+            status: 'success',
+            data: user
+        })
+    }
+
+
 }
 
 module.exports = UserController

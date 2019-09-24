@@ -33,7 +33,18 @@ export default {
             this.$router.push('/login')
         },
         fetchUserCourses() {
-           axios.get('/usercourses?email=bdfffd@gmail.com').then(response => {
+        //    axios.get('/usercourses?email=bdfffd@gmail.com').then(response => {
+        //         // this.$store.commit('changeCourses',response.data.data)
+        //         this.courses = response.data.data
+        //     })
+            axios.get('/usercourses', {
+            headers: {
+                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                    },
+             params: {
+                        email: this.$store.getters.useremail || localStorage.getItem('useremail')
+                    }
+           }).then(response => {
                 // this.$store.commit('changeCourses',response.data.data)
                 this.courses = response.data.data
             })

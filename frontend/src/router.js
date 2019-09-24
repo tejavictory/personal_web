@@ -9,8 +9,11 @@ import Student from '@/components/Student'
 import Admin from '@/components/Admin'
 import InsStu from '@/components/InsStu'
 import InsDash from '@/components/InsDash'
+import Secure from '@/components/Secure'
+import Welcome from '@/components/Welcome'
 
 Vue.use(Router)
+
 
 export default new Router({
   routes: [
@@ -30,6 +33,13 @@ export default new Router({
     {
       path: '/resetpassword',
       component: ResetPassword
+    },
+    {
+      path: '/secure',
+      component: Secure,
+      meta: { 
+        requiresAuth: true
+      }
     },
     {
       path: '/Instructor',
@@ -55,6 +65,10 @@ export default new Router({
       component: Admin
     },    
     {
+      path: '/welcome',
+      component: Welcome
+    }, 
+    {
       path: '/about',
       name: 'about',
       // route level code-splitting
@@ -64,3 +78,4 @@ export default new Router({
     }
   ]
 })
+

@@ -40,8 +40,19 @@ export default {
             $('#createCourse').modal('show')
         },
         fetchCourses() {
-            axios.get('/courses').then(response => {
-                this.$store.commit('changeCourses',response.data.data)
+            // axios.get('/courses'+localStorage.getItem('useremail')).then(response => {
+            //     this.$store.commit('changeCourses',response.data.data)
+            //     this.courses = response.data.data
+            // })
+            axios.get('/course/'+localStorage.getItem('useremail'), {
+                headers: {
+                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                    }
+                // params: {
+                //         email: this.$store.getters.useremail || localStorage.getItem('useremail')
+                //     }
+           }).then(response => {
+                // this.$store.commit('changeCourses',response.data.data)
                 this.courses = response.data.data
             })
         }

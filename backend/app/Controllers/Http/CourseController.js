@@ -13,7 +13,7 @@ class CourseController {
       }
     
       async store({ request, response }) {
-        const data = request.only(['course_name', 'startDate', 'endDate', 'presurveylink', 'postsurveylink', 'codewordAssignStatus'])
+        const data = request.only(['course_name', 'startDate', 'endDate', 'presurveylink', 'postsurveylink', 'codewordAssignStatus', 'insEmail'])
         const users = request.input('users')
         const course = await Course.create(data)
         await course.save()
@@ -50,6 +50,14 @@ class CourseController {
         response.status(200).json({
           message: 'Here is your course.',
           data: course
+        })
+      }
+
+      async getCourses({ request, response, params: { insEmail } }) {
+        const courses = await Course.query().where('insEmail','=',insEmail).fetch()    
+        response.status(200).json({
+          message: 'Here are your courses.',
+          data: courses
         })
       }
     

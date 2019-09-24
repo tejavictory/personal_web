@@ -77,7 +77,8 @@ export default {
             cpresurvey: '',
             cpostsurvey: '',
             cassignstat: '',
-            cstudents: ''
+            cstudents: '',
+            insEmail: ''
         }
     },
     methods: {
@@ -94,7 +95,8 @@ export default {
                 endDate: this.cenddate,
                 presurveylink: this.cpresurvey,
                 postsurveylink: this.cpostsurvey,
-                codewordAssignStatus: this.cassignstat
+                codewordAssignStatus: this.cassignstat,
+                insEmail: this.$store.getters.useremail || localStorage.getItem('useremail')
             })
             .then(response => {
                 // redirect to user home

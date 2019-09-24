@@ -57,7 +57,8 @@
                 notification: {
                     message: '',
                     type: ''
-                }
+                },
+                role: ''
             }
         },
         beforeRouteEnter (to, from, next) {
@@ -75,9 +76,10 @@
                     .then(response => {
                         // save token in localstorage
                         localStorage.setItem('auth-token', response.data.data.token)
-
-                        // redirect to user home
-                        this.$router.push('/')
+                        this.$store.commit('changeUserEmail',this.email)
+                        this.fetchAuthenticatedUser()
+                        this.getRole()
+                        this.$router.push('/welcome')
                     })
                     .catch(error => {
                         // clear form inputs
@@ -88,6 +90,35 @@
                             message: error.response.data.message,
                             type: error.response.data.status
                         })
+                    })
+            },
+            fetchAuthenticatedUser () {
+                const token = localStorage.getItem('auth-token')
+
+                axios
+                    .get('user/me', {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    })
+                    .then(response => {
+                        this.email = response.data.data.email
+                        this.$store.commit('changeUserEmail',response.data.data.email)
+                        this.$store.commit('changeUser',response.data.data)
+                    })
+            },
+            getRole () {
+                const token = localStorage.getItem('auth-token')
+
+                axios
+                    .get('user/me', {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        }
+                    })
+                    .then(response => {
+                        this.role = response.data.data.role_name
+                        this.$store.commit('changeUserRole',response.data.data.role_name)
                     })
             }
         }

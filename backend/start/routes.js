@@ -22,12 +22,14 @@ Route.get('/', () => {
 
 Route.post('/signup', 'UserController.signup')
 Route.post('/login', 'UserController.login')
-Route.post('/rolecreate', 'RoleController.rolecreate')
 Route.post('/coursecreate', 'CourseController.store')
 Route.post('/delcourse/:id', 'CourseController.destroy')
 Route.post('/showcourse/:id', 'CourseController.show')
+Route.get('/course/:insEmail', 'CourseController.getCourses').middleware(['auth:jwt'])
 Route.get('/courses', 'CourseController.index')
 Route.put('/courseupdate/:id', 'CourseController.update')
+Route.get('/user/me','UserController.me').middleware(['auth:jwt'])
+Route.get('/usercourses', 'UserController.getCourses').middleware(['auth:jwt'])
+Route.get('/users','UserController.index').middleware(['auth:jwt'])
 
-Route.get('/usercourses', 'UserController.getCourses')
 

@@ -16,6 +16,9 @@ import Header from '@/components/Header.vue'
 </script>
 
 <style>
+    *{
+        font-family: 'QuickSand', sans-serif;
+    }
     body {
         background-color: white;
         padding-top: 0px;
