@@ -7,7 +7,7 @@ class CodewordSchema extends Schema {
   up () {
     this.create('codewords', (table) => {
       table.increments()
-      table.string('codeword',10).notNullable()
+      table.string('codeword',10).notNullable().unique()
       table.timestamps()
     })
   }

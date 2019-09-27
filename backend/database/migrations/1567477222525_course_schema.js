@@ -8,7 +8,7 @@ class CourseSchema extends Schema {
     this.create('courses', (table) => {
       table.increments()
       table.string('course_name',20).notNullable().unique()
-      table.string('insEmail',80).notNullable().defaultTo('')
+      table.string('insEmail',80).notNullable()
       table.text('startDate').nullable()
       table.text('endDate').nullable()
       table.text('presurveylink').nullable()

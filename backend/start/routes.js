@@ -31,5 +31,7 @@ Route.put('/courseupdate/:id', 'CourseController.update')
 Route.get('/user/me','UserController.me').middleware(['auth:jwt'])
 Route.get('/usercourses', 'UserController.getCourses').middleware(['auth:jwt'])
 Route.get('/users','UserController.index').middleware(['auth:jwt'])
+Route.post('/addcdwd','CodewordController.store')
+Route.post('/createset','CodewordsetController.store')
 
 
