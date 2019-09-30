@@ -4,6 +4,11 @@
 const Model = use('Model')
 
 class Codewordset extends Model {
+
+    static get primaryKey () {
+        return 'name'
+      }
+
     codewords() {
         return this.hasMany('App/Models/Codeword')
     }

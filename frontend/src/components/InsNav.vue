@@ -1,5 +1,5 @@
 <template>
-<div class="ui pointing stackable container big menu">
+<div id="temp" class="ui pointing stackable container big menu">
   <div class="header item">
     Codeword App
   </div>
@@ -9,8 +9,11 @@
     <a class="item" v-on:click="setActive('studash')" :class="{ active: isActive('studash') }">
           <router-link to="/InsStu"> Student Dashboard </router-link>
     </a>
+    <a class="item" v-on:click="setActive('cdwd')" :class="{ active: isActive('cdwd') }">
+          <router-link to="/Codewords"> Codewords Dashboard</router-link>
+    </a>
   <div class="right menu">
-    <a class="item">
+    <a class="item" v-on:click="logout">
       Logout
     </a>
   </div>
@@ -29,11 +32,15 @@ export default {
 
   },
   methods: {
+        logout() {
+            localStorage.removeItem('auth-token')
+            this.$router.push('/login')
+        },
         isActive: function (menuItem) {
             return this.activeItem === menuItem
         },
         setActive: function (menuItem) {
-            this.activeItem = menuItem 
+            this.activeItem = menuItem
         }
   }
 }
@@ -42,5 +49,15 @@ export default {
 <style scoped>
 *{
   color: black;
+}
+#temp{
+  background-color: rgba(255, 253, 245, 0.63)
+}
+a:hover{
+  color: rgb(16, 56, 104);
+}
+.header.item{
+  background-color: rgb(16, 56, 104);
+  color: white;
 }
 </style>

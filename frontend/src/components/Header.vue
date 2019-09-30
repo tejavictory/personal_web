@@ -6,9 +6,12 @@
 
 <style scoped>
     * {
-        background-color: white;
-        color: black;
+        color: white;
         padding: 5px;
         text-align: center;
+        font-family: 'Quicksand', sans-serif;
+    }
+    .ui.segment.container.fluid{
+        background-color: rgb(25, 56, 93);
     }
 </style>

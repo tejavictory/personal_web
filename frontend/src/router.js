@@ -11,6 +11,7 @@ import InsStu from '@/components/InsStu'
 import InsDash from '@/components/InsDash'
 import Secure from '@/components/Secure'
 import Welcome from '@/components/Welcome'
+import Codewords from '@/components/Codewords'
 
 Vue.use(Router)
 
@@ -53,6 +54,14 @@ export default new Router({
         {
           path: '/InsDash',
           component: InsDash
+        },
+        {
+          path: '/InsStu',
+          component: InsStu
+        },
+        {
+          path: '/Codewords',
+          component: Codewords
         }
       ]
     },

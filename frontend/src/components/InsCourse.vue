@@ -3,22 +3,22 @@
             <div class="ui fluid card">
                 <div class="content">
                     <label>{{ course.course_name }}</label> 
-                    <button class="ui icon button" v-on:click="delCourse">
+                    <button class="ui icon red button" id="trash" v-on:click="delCourse">
                         <i class="trash alternate outline icon"></i>
                     </button>
-                    <button class="ui icon button" v-on:click="updateCourse">
+                    <button class="ui icon blue button" id="edit" v-on:click="updateCourse">
                         <i class="edit outline icon"></i>
                     </button>
                      
                 </div>
-                <div class="content">
+                <div class="content" id="temp">
                     <label> Start Date: </label> <span>{{ course.startDate }}</span><br/>
                     <label> End Date: </label> <span>{{ course.endDate }}</span><br/>
                     <label> Pre-Survey Link: </label> <span>{{ course.presurveylink }}</span><br/>
                     <label> Post-Survey Link: </label> <span>{{ course.postsurveylink }}</span><br/>
                 </div>
                 <div class="extra content">
-                    <button class="ui button fluid">Distribute Codewords</button>
+                    <button class="ui blue button fluid">Distribute Codewords</button>
                 </div>
             </div>
     </div> 

@@ -20,9 +20,9 @@ import Header from '@/components/Header.vue'
         font-family: 'QuickSand', sans-serif;
     }
     body {
-        background-color: white;
         padding-top: 0px;
         padding-bottom: 50px;
+        background-color: #fffafa;
     }
 
     .is-danger {

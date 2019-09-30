@@ -33,5 +33,8 @@ Route.get('/usercourses', 'UserController.getCourses').middleware(['auth:jwt'])
 Route.get('/users','UserController.index').middleware(['auth:jwt'])
 Route.post('/addcdwd','CodewordController.store')
 Route.post('/createset','CodewordsetController.store')
+Route.post('/updateset/:id','CodewordsetController.update')
+Route.get('/getsets','CodewordsetController.index')
+Route.get('/getWordsSet/:setname', 'CodewordController.getWordsSet')
 
 

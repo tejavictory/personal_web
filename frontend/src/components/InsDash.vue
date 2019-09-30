@@ -1,7 +1,7 @@
 <template>
     <div class="ui container">
         <p> Instructor Dashboard Construction in progress... </p>
-        <div class="ui top attached button" tabindex="0" v-on:click="showModal">Add Course</div>
+        <div class="ui top attached blue button" tabindex="1" v-on:click="showModal">Add Course</div>
         <br/>
         <div class="ui stackable four column grid">            
             <InsCourse

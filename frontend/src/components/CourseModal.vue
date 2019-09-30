@@ -43,15 +43,29 @@
                 <div class="field">
                     <label> Add Students to the Course </label>
                     <div class="ui left icon input">
-                        <input type="text" placeholder="Add Students..." v-model="cstudents">
+                        <input type="text" id="cstu" placeholder="Add Students..." v-model="cstudents">
                         <i class="users icon"></i>
                     </div>                    
                 </div>      
 
                 <div class="field">
                     <label> Upload a CSV file instead </label>
-                    <input type="file" placeholder="File Upload">
+                    <input type="file" id="fileUpload" placeholder="CSV File Upload" accept=".csv" v-on:change="upload">
                 </div>
+            </div>
+            <div class="field">
+            <label>Codeword Set</label>
+            <div class="ui selection dropdown">
+                <input type="hidden" name="codewordsets">
+                <i class="dropdown icon" v-on:click="showsets"></i>
+                <div class="default text">Codeword Sets</div>
+                <div class="menu">
+                    <span class="item"
+                        v-for="setitem in sets"
+                        :key="setitem.name"
+                        :set="setitem" data-value= setitem.name > {{ setitem.name }} </span>
+                </div>
+            </div>
             </div>
         </div>
         <div class="actions">
@@ -77,11 +91,14 @@ export default {
             cpresurvey: '',
             cpostsurvey: '',
             cassignstat: '',
-            cstudents: '',
-            insEmail: ''
+            cstudents: [],
+            insEmail: '',
+            sets: '',
         }
     },
     methods: {
+        formatStudents: function () {
+        },
         startdatepick: function () {
             $('#startdate_calendar').calendar({type:'date'})
         },
@@ -96,7 +113,8 @@ export default {
                 presurveylink: this.cpresurvey,
                 postsurveylink: this.cpostsurvey,
                 codewordAssignStatus: this.cassignstat,
-                insEmail: this.$store.getters.useremail || localStorage.getItem('useremail')
+                insEmail: this.$store.getters.useremail || localStorage.getItem('useremail'),
+                users: sessionStorage.getItem('addstu').split(',')
             })
             .then(response => {
                 // redirect to user home
@@ -105,8 +123,42 @@ export default {
             .catch(error => {
                 // clear form inputs
                 this.cname = error
-            })            
-        }
+            })
+        },
+        upload: function (evt) {
+            var data = null;
+            var file = evt.target.files[0];
+            var reader = new FileReader();
+            reader.readAsText(file);
+            reader.onload = function(event) {
+                var csvData = event.target.result;
+                data = $.csv.toArrays(csvData);
+                if (data && data.length > 0) {
+                    console.log(data[0])
+                    this.cstudents = data[0]
+                    sessionStorage.setItem('addstu',data[0])
+                } else {
+                    alert('No data to import!');
+                }
+            };
+            reader.onerror = function() {
+                alert('Unable to read ' + file.fileName);
+            };
+        },
+        showsets: function () {
+            axios.get('/getsets',{
+            })
+            .then(response => {
+                this.sets = response.data.data
+                // redirect to user home
+                // this.$router.go()
+                $('.ui.selection.dropdown').dropdown('show')
+            })
+            .catch(error => {
+                // clear form inputs
+                this.cname = error
+            })
+        }    
     }
 }
 </script>
