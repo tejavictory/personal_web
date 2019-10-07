@@ -31,7 +31,28 @@ export default {
     name: 'InsReq',
     data() {
         return {
+            users: []
+        }
+    },
+    mounted:function() {
+        this.fetchUsers()
+    },
+    methods: {
+        delUser: function() {
 
+        },
+        fetchUsers: function() {
+            axios.get('/reqUsers', {
+                headers: {
+                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                    }
+                // params: {
+                //         email: this.$store.getters.useremail || localStorage.getItem('useremail')
+                //     }
+           }).then(response => {
+                // this.$store.commit('changeCourses',response.data.data)
+                this.users = response.data.data
+            })
         }
     }
 }
