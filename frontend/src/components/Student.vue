@@ -13,6 +13,9 @@
             </a>
         </div>
         </div>
+        <div>
+            <button class="ui button blue" v-on:click="reqIns">Request Instructor Previleges</button>
+        </div>
         <p> Student Dashboard Construction in progress... </p>
         <div class="ui stackable four column grid">
             <StuCourse
@@ -72,6 +75,18 @@ export default {
            }).then(response => {
                 // this.$store.commit('changeCourses',response.data.data)
                 this.courses = response.data.data
+            })
+        },
+        reqIns() {
+            axios.post('/reqIns', {
+            headers: {
+                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                    },
+             params: {
+                        email: this.$store.getters.useremail || localStorage.getItem('useremail')
+                    }
+           }).then(response => {
+                this.insstat = response.data.data
             })
         }
     }

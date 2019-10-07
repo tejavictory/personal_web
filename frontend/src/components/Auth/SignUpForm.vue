@@ -96,7 +96,8 @@ export default {
           lastname: this.lastname,
           username: this.username,
           email: this.email,
-          password: this.password
+          password: this.password,
+          role_name: 'Student'
         })
         .then(response => {
           // save token in localstorage
