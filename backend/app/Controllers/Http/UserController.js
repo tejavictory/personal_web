@@ -72,6 +72,21 @@ class UserController {
         })
     }
 
+    
+    async update({ request, response, params: { username } }) {
+        const role_name = request.input('role_name')
+
+        const user = await User.findBy('username',username)
+        
+        user.role_name = role_name
+        await user.save()
+    
+        response.status(200).json({
+          message: 'Successfully updated this user role.',
+          data: user
+        })
+      }
+
 
 }
 

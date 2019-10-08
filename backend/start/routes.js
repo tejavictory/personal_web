@@ -36,5 +36,11 @@ Route.post('/createset','CodewordsetController.store')
 Route.post('/updateset/:id','CodewordsetController.update')
 Route.get('/getsets','CodewordsetController.index')
 Route.get('/getWordsSet/:setname', 'CodewordController.getWordsSet')
+Route.get('/reqUsers','InsrequestController.index')
+Route.post('/reqIns','InsrequestController.store')
+Route.post('/updatereq/:username','InsrequestController.update')
+Route.post('/updaterole/:username','UserController.update')
+
+
 
 

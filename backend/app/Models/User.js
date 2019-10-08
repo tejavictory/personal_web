@@ -47,6 +47,10 @@ class User extends Model {
 
   }
 
+  insrequests() {
+    return this.hasOne('App/Models/Insrequest')
+  }
+
   courses () {
     return this.belongsToMany('App/Models/Course','email','course_id').pivotTable('user_course')
   }

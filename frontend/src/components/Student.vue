@@ -59,7 +59,9 @@ export default {
                         }
                     })
                     .then(response => {
+                        this.username = response.data.data.username
                         this.email = response.data.data.email
+                        localStorage.setItem('username',response.data.data.username)
                         this.$store.commit('changeUserEmail',response.data.data.email)
                     })
 
@@ -82,9 +84,8 @@ export default {
             headers: {
                         Authorization: `Bearer ${localStorage.getItem('auth-token')}`
                     },
-             params: {
-                        email: this.$store.getters.useremail || localStorage.getItem('useremail')
-                    }
+                    username: this.$store.getters.username || localStorage.getItem('username'),
+                    status: 'Pending'
            }).then(response => {
                 this.insstat = response.data.data
             })
