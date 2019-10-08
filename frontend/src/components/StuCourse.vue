@@ -9,7 +9,7 @@
                     <label> End Date: </label> <span>{{ course.endDate }}</span><br/>
                     <label> Pre-Survey Link: </label> <span>{{ course.presurveylink }}</span><br/>
                     <label> Post-Survey Link: </label> <span>{{ course.postsurveylink }}</span><br/>
-                    <label> Codeword: </label> <span>{{  }}</span><br/>
+                    <label> Codeword: </label> <span class="visible content">{{  }}</span><span class="hidden content">Reveal Codeword</span><br/>
                 </div>
             </div>
     </div> 

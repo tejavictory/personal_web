@@ -40,6 +40,7 @@ Route.get('/reqUsers','InsrequestController.index')
 Route.post('/reqIns','InsrequestController.store')
 Route.post('/updatereq/:username','InsrequestController.update')
 Route.post('/updaterole/:username','UserController.update')
+Route.get('/getreqstat','InsrequestController.getreq')
 
 
 

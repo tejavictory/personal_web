@@ -13,6 +13,9 @@
             </a>
         </div>
         </div>
+        <!-- <div class="ui segment" v-if="localstorage.getItem('reqstat')==='Pending'">
+            Instructor Previleges Pending
+        </div> -->
         <div>
             <button class="ui button blue" v-on:click="reqIns">Request Instructor Previleges</button>
         </div>
@@ -40,6 +43,7 @@ export default {
     mounted:function() {
         this.fetchUserEmail()
         this.fetchUserCourses()
+        this.fetchReqStatus()
     },
     components: {
         StuCourse
@@ -89,6 +93,21 @@ export default {
            }).then(response => {
                 this.insstat = response.data.data
             })
+        },
+        fetchReqStatus() {
+            try{
+            axios.get('/getreqstat/'+localStorage.getItem('username'), {
+            headers: {
+                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                    }
+           }).then(response => {
+                this.reqstat = response.data.status
+                localStorage.setItem('reqstat',response.data.status)
+            })
+            }
+            catch(error){
+                localStorage.setItem('reqstat','error')
+            }
         }
     }
 }
