@@ -10,7 +10,7 @@
   <a class="item" v-on:click="setActive('insreq')" :class="{ active: isActive('insreq') }">Instructor Requests</a>
   <a class="item" v-on:click="setActive('rmusers')" :class="{ active: isActive('rmusers') }">Remove Users</a>
   <div class="right menu">
-    <a class="item">
+    <a class="item" v-on:click="logout">
       Logout
     </a>
   </div>
@@ -31,7 +31,11 @@ export default {
         setActive: function (menuItem) {
             this.activeItem = menuItem 
             this.$root.$emit('AdminNavContent', menuItem)
-        }
+        },
+        logout() {
+            localStorage.removeItem('auth-token')
+            this.$router.push('/login')
+        },
     }
 }
 </script>
