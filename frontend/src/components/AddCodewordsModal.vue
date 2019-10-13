@@ -35,7 +35,7 @@
             <div class="field">
                 <button class="ui button blue" v-on:click="addNew"><i class="plus icon"></i>New Codeword</button> 
             </div>
-            <div class="field">
+            <div class="field" >
                 <button class="ui button blue" v-on:click="validateWords"><i class="check icon"></i>Validate Codewords</button> 
             </div>
         </div>
@@ -58,6 +58,7 @@ export default {
         $('#nameerr').hide()
         $('#validname').hide()
         $('#violations').hide()
+        $('#done').hide()
     },
     data() {
         return {
@@ -96,6 +97,7 @@ export default {
         },
         validateWords() {
             $('#violations').hide()
+            $('#done').hide()
             var c = document.getElementById("grid").childNodes;
             var word = "";
             var i,j;
@@ -105,6 +107,9 @@ export default {
             for (i = 0; i < c.length; i++) {
                 word = c[i].childNodes[0].value;
                 c[i].childNodes[0].style.color = "#000000"
+                c[i].childNodes[0].style.backgroundColor = "#ffffff"
+                c[i].setAttribute("data-tooltip","")
+                c[i].setAttribute("data-variation","wide")
                 words.push(word.toUpperCase())
             }
             for (i = 0; i < words.length - 1; i++){
@@ -115,6 +120,10 @@ export default {
                         document.getElementById("grid").childNodes[j].childNodes[0].style.color = "#ffffff"
                         document.getElementById("grid").childNodes[i].childNodes[0].style.backgroundColor = "#ff0000"
                         document.getElementById("grid").childNodes[j].childNodes[0].style.backgroundColor = "#ff0000"
+                        document.getElementById("grid").childNodes[i].setAttribute("data-tooltip",
+                            document.getElementById("grid").childNodes[i].getAttribute("data-tooltip")+"<strong>Hard rule</strong>: Word Similarity more than 70% with "+words[j]+" ")
+                        document.getElementById("grid").childNodes[j].setAttribute("data-tooltip",
+                            document.getElementById("grid").childNodes[j].getAttribute("data-tooltip")+"Hard rule: Word Similarity more than 70% with "+words[i]+" ")
                         hardcount++
                         // console.log('Similar words: '+words[i]+', '+words[j])
                     }
@@ -124,8 +133,10 @@ export default {
                         document.getElementById("grid").childNodes[j].childNodes[0].style.color = "#ff0000"
                         document.getElementById("grid").childNodes[i].childNodes[0].style.backgroundColor = "#ffffff"
                         document.getElementById("grid").childNodes[j].childNodes[0].style.backgroundColor = "#ffffff"  
-                        document.getElementById("grid").childNodes[i].setAttribute("data-tooltip","Soft rule")
-                        document.getElementById("grid").childNodes[j].setAttribute("data-tooltip","Soft rule")
+                        document.getElementById("grid").childNodes[i].setAttribute("data-tooltip",
+                            document.getElementById("grid").childNodes[i].getAttribute("data-tooltip")+"Soft rule: Tolerable word similarity with "+words[j]+" ")
+                        document.getElementById("grid").childNodes[j].setAttribute("data-tooltip",
+                            document.getElementById("grid").childNodes[j].getAttribute("data-tooltip")+"Soft rule: Tolerable word similarity with "+words[i]+" ")
                         softcount++
                     }
                     //hard rule
@@ -135,6 +146,10 @@ export default {
                         document.getElementById("grid").childNodes[j].childNodes[0].style.color = "#ffffff"                        
                         document.getElementById("grid").childNodes[i].childNodes[0].style.backgroundColor = "#ff0000"
                         document.getElementById("grid").childNodes[j].childNodes[0].style.backgroundColor = "#ff0000"
+                        document.getElementById("grid").childNodes[i].setAttribute("data-tooltip",
+                            document.getElementById("grid").childNodes[i].getAttribute("data-tooltip")+"Hard rule: Anagram with "+words[j]+" ")
+                        document.getElementById("grid").childNodes[j].setAttribute("data-tooltip",
+                            document.getElementById("grid").childNodes[j].getAttribute("data-tooltip")+"Hard rule: Anagram with "+words[i]+" ")
                         hardcount++
                     }
                 }
@@ -143,6 +158,9 @@ export default {
                 this.softcount = softcount
                 this.hardcount = hardcount
                 $('#violations').show()
+            }
+            if(hardcount == 0){
+                $('#done').show()
             }
             console.log(words)
         },
@@ -181,32 +199,32 @@ export default {
             // first = first.replace(/\s+/g, '')
             // second = second.replace(/\s+/g, '')
 
-            if (!first.length && !second.length) return 1;                   // if both are empty strings
-            if (!first.length || !second.length) return 0;                   // if only one is empty string
-            if (first === second) return 1;       							 // identical
-            if (first.length === 1 && second.length === 1) return 0;         // both are 1-letter strings
-            if (first.length < 2 || second.length < 2) return 0;			 // if either is a 1-letter string
+            if (!first.length && !second.length) return 1              // if both are empty strings
+            if (!first.length || !second.length) return 0              // if only one is empty string
+            if (first === second) return 1     				 // identical
+            if (first.length === 1 && second.length === 1) return 0    // both are 1-letter strings
+            if (first.length < 2 || second.length < 2) return 0			 // if either is a 1-letter string
 
-            let firstBigrams = new Map();
+            let firstBigrams = new Map()
             for (let i = 0; i < first.length - 1; i++) {
-                const bigram = first.substring(i, i + 2);
+                const bigram = first.substring(i, i + 2)
                 const count = firstBigrams.has(bigram)
                     ? firstBigrams.get(bigram) + 1
-                    : 1;
+                    : 1
 
                 firstBigrams.set(bigram, count);
-            };
+            }
 
-            let intersectionSize = 0;
+            let intersectionSize = 0
             for (let i = 0; i < second.length - 1; i++) {
-                const bigram = second.substring(i, i + 2);
+                const bigram = second.substring(i, i + 2)
                 const count = firstBigrams.has(bigram)
                     ? firstBigrams.get(bigram)
-                    : 0;
+                    : 0
 
                 if (count > 0) {
-                    firstBigrams.set(bigram, count - 1);
-                    intersectionSize++;
+                    firstBigrams.set(bigram, count - 1)
+                    intersectionSize++
                 }
             }
 
@@ -216,8 +234,8 @@ export default {
             if (str1.length !== str2.length) {
                 return false;
             }            
-            var sortStr1 = str1.split('').sort().join('');
-            var sortStr2 = str2.split('').sort().join('');
+            var sortStr1 = str1.split('').sort().join('')
+            var sortStr2 = str2.split('').sort().join('')
             return (sortStr1 === sortStr2);
         }
     }
@@ -236,5 +254,9 @@ export default {
     .ui.message{
         background-color: rgb(252, 228, 228);
         color: red;
+    }
+
+    #wordvalidate{
+        float: right;
     }
 </style>
