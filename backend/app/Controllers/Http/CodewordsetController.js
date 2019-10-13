@@ -13,6 +13,15 @@ class CodewordsetController {
       })
     }
 
+    async isUniqueName({ request, response, params: {name} }) {
+      const codewordset = await Codewordset.findBy('name',name)
+
+      response.status(200).json({
+        message: 'Here is your codeword set.',
+        data: codewordset
+      })
+    }
+
     async store({ request, response }) {
         const data = request.only(['name', 'creator', 'type'])
         const codewords = request.input('codewords')

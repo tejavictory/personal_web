@@ -41,6 +41,7 @@ Route.post('/reqIns','InsrequestController.store')
 Route.post('/updatereq/:username','InsrequestController.update')
 Route.post('/updaterole/:username','UserController.update')
 Route.get('/getreqstat','InsrequestController.getreq')
+Route.get('/isUniqueName/:name','CodewordsetController.isUniqueName')
 
 
 

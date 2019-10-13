@@ -3,7 +3,7 @@
         <br/>
         <div class="ui segment container">
             <h2>Codeword Sets.... Under Construction</h2>
-            <button class="ui button blue">Add New Codeword Set</button>
+            <button class="ui button blue" v-on:click="showModal()">Add New Codeword Set</button>
         </div>
 
         <div class="ui styled fluid accordion" v-for="item in sets"
@@ -22,10 +22,12 @@
                 </div>
             </div>
         </div>
+        <AddCodewordsModal/>
     </div>
 </template>
 
 <script>
+import AddCodewordsModal from '@/components/AddCodewordsModal.vue'
 export default {
     name: 'CodewordSets',
     data() {
@@ -34,10 +36,16 @@ export default {
             words: []
         }
     },
+    components: {
+        AddCodewordsModal
+    },
     mounted() {
         this.fetchSets()
     },
     methods: {
+        showModal: function() {
+            $('#createSet').modal('show')
+        },
         fetchSets() {
             axios.get('/getsets', {
             // headers: {
