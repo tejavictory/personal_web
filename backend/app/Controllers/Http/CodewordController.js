@@ -35,6 +35,21 @@ class CodewordController {
             data: codeword
         })
       }
+
+      async storeMultiple({ request, response }) {
+        const words = request.input('codewords')
+        const setname = request.input('codewordset_name')
+        for (word in words){
+            const codeword = new Codeword()
+            codeword.codeword = word
+            codeword.codewordset_name = setname
+            await codeword.save()
+        }
+        response.status(200).json({
+            message: 'Done adding codeword.',
+            data: words
+        })
+      }
 }
 
 module.exports = CodewordController

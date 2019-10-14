@@ -36,7 +36,7 @@
                 <button class="ui button blue" v-on:click="addNew"><i class="plus icon"></i>New Codeword</button> 
             </div>
             <div class="field" >
-                <button class="ui button blue" v-on:click="validateWords"><i class="check icon"></i>Validate Codewords</button> 
+                <button class="ui button fluid green" v-on:click="validateWords"><i class="check icon"></i>Validate</button> 
             </div>
         </div>
         <div class="actions">
@@ -64,7 +64,11 @@ export default {
         return {
             csname: '',
             softcount: '',
-            hardcount: ''
+            hardcount: '',
+            validname: 'no',
+            validwords: 'no',
+            codewords: '',
+            type: ''
         }
     },
     methods: {
@@ -75,18 +79,28 @@ export default {
                 if(response.data.data==null){
                     $('#nameerr').hide()
                     $('#validname').show()
+                    this.validname = 'yes'
                 }
                 else{
                     $('#validname').hide()
                     $('#nameerr').show()
+                    this.validname = 'no'
                 }
+                            if(this.validwords == 'yes' && this.validname == 'yes'){
+                                $('#done').show()
+                            }
+                            else{
+                                $('#done').hide()
+                            }
                 // redirect to user home
             })
             .catch(error => {
                 // clear form inputs
                 $('#nameerr').hide()
                 $('#validname').show()
+                this.validname = 'yes'
             })
+
         },
         addNew: function(){
             var node = document.createElement("div");
@@ -112,6 +126,7 @@ export default {
                 c[i].setAttribute("data-variation","wide")
                 words.push(word.toUpperCase())
             }
+            this.codewords = words
             for (i = 0; i < words.length - 1; i++){
                 for (j = i+1; j < words.length; j++){
                     //hard rule
@@ -157,10 +172,17 @@ export default {
             if(softcount>0 || hardcount>0){
                 this.softcount = softcount
                 this.hardcount = hardcount
+                this.validwords = 'no'
                 $('#violations').show()
             }
             if(hardcount == 0){
+                this.validwords = 'yes'
+            }
+            if(this.validwords == 'yes' && this.validname == 'yes'){
                 $('#done').show()
+            }
+            else{
+                $('#done').hide()
             }
             console.log(words)
         },
@@ -173,27 +195,38 @@ export default {
             $('#enddate_calendar').calendar({type:'date'})
         },
         createSet: function() {
-
-        },
-        createCourse() {
-            axios.post('/coursecreate',{
-                course_name: this.cname,
-                startDate: this.cstartdate,
-                endDate: this.cenddate,
-                presurveylink: this.cpresurvey,
-                postsurveylink: this.cpostsurvey,
-                codewordAssignStatus: this.cassignstat,
-                insEmail: this.$store.getters.useremail || localStorage.getItem('useremail'),
-                users: sessionStorage.getItem('addstu').split(',')
+            axios.post('/createset',{
+                name: this.csname,
+                creator: localStorage.getItem('username'),
+                type: this.type||'SMALL'
             })
             .then(response => {
                 // redirect to user home
-                this.$router.go()
+                var i=0
+                for(i=0;i<this.codewords.length;i++){
+                    this.createWords(this.codewords[i])
+                }
+                // this.createWords()
+                // this.$router.go()
             })
             .catch(error => {
                 // clear form inputs
-                this.cname = error
+                this.csname = error
             })
+        },
+        createWords(word) {
+                axios.post('/addcdwd',{
+                    codeword: word,
+                    codewordset_name: this.csname
+                })
+                .then(response => {
+                    console.log('done adding words')
+                    // this.$router.go()
+                })
+                .catch(error => {
+                    // clear form inputs
+                    this.csname = error
+                })
         },
         compareTwoStrings(first, second) {
             // first = first.replace(/\s+/g, '')
