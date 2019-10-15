@@ -51,7 +51,7 @@ export default {
   color: black;
 }
 #temp{
-  background-color: rgba(255, 253, 245, 0.63)
+  background-color:#97CAEF
 }
 a:hover{
   color: rgb(16, 56, 104);

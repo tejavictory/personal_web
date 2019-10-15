@@ -22,7 +22,7 @@ import Header from '@/components/Header.vue'
     body {
         padding-top: 0px;
         padding-bottom: 50px;
-        background-color: #fffafa;
+        background-color: #eee9ff;
     }
 
     .is-danger {

@@ -6,10 +6,10 @@
             <table class="ui single line table">
             <thead>
                 <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Email</th>
-                <th></th>
+                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Name</th>
+                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Role</th>
+                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Email</th>
+                <th style="background-color:rgba(0, 9, 61, 0.705);color:white"></th>
                 </tr>
             </thead>
             <tbody>
@@ -19,7 +19,7 @@
                 <td>{{ item.firstname + ' ' + item.lastname }}</td>
                 <td>{{ item.role_name }}</td>
                 <td>{{ item.email }}</td>
-                <td><button class="ui button" v-on:click="delUser"><i class="trash alternate outline icon"></i></button></td>
+                <td><button class="ui button inverted red" v-on:click="delUser"><i class="trash alternate outline icon"></i>Delete</button></td>
                 </tr>
             </tbody>
             </table>
@@ -60,5 +60,7 @@ export default {
 </script>
 
 <style scoped>
-
+tr{
+    background-color: rgb(203, 228, 250);
+}
 </style>

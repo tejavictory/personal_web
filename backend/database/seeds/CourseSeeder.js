@@ -24,7 +24,7 @@ class CourseSeeder {
             endDate : 'Dec 10, 2019',
             presurveyLink : 'google.com',
             postsurveyLink : 'google.com',
-            codeword_AssignStatus : '0/0'
+            codewordAssignStatus : '0/0'
         },
         {
             course_name : 'BIGDATA',
@@ -33,7 +33,7 @@ class CourseSeeder {
             endDate : 'Dec 10, 2019',
             presurveyLink : 'google.com',
             postsurveyLink : 'google.com',
-            codeword_AssignStatus : '0/0'
+            codewordAssignStatus : '0/0'
         },
         {
             course_name : 'IOS',
@@ -42,7 +42,7 @@ class CourseSeeder {
             endDate : 'Dec 10, 2019',
             presurveyLink : 'google.com',
             postsurveyLink : 'google.com',
-            codeword_AssignStatus : '0/0'
+            codewordAssignStatus : '0/0'
         },
         {
             course_name : 'JAVA',
@@ -51,7 +51,7 @@ class CourseSeeder {
             endDate : 'Dec 10, 2019',
             presurveyLink : 'google.com',
             postsurveyLink : 'google.com',
-            codeword_AssignStatus : '0/0'
+            codewordAssignStatus : '0/0'
         },
         {
             course_name : 'WEB APPS',
@@ -60,7 +60,7 @@ class CourseSeeder {
             endDate : 'Dec 10, 2019',
             presurveyLink : 'google.com',
             postsurveyLink : 'google.com',
-            codeword_AssignStatus : '0/0'
+            codewordAssignStatus : '0/0'
         },
         {
             course_name : 'DEV APPS',
@@ -69,7 +69,7 @@ class CourseSeeder {
             endDate : 'Dec 10, 2019',
             presurveyLink : 'google.com',
             postsurveyLink : 'google.com',
-            codeword_AssignStatus : '0/0'
+            codewordAssignStatus : '0/0'
         },
         {
             course_name : 'DATABASE',
@@ -78,7 +78,7 @@ class CourseSeeder {
             endDate : 'Dec 10, 2019',
             presurveyLink : 'google.com',
             postsurveyLink : 'google.com',
-            codeword_AssignStatus : '0/0'
+            codewordAssignStatus : '0/0'
         },
         {
             course_name : 'DOTNET',
@@ -87,7 +87,7 @@ class CourseSeeder {
             endDate : 'Dec 10, 2019',
             presurveyLink : 'google.com',
             postsurveyLink : 'google.com',
-            codeword_AssignStatus : '0/0'
+            codewordAssignStatus : '0/0'
         },
         {
             course_name : 'DATA VISUALIZATION',
@@ -96,7 +96,7 @@ class CourseSeeder {
             endDate : 'Dec 10, 2019',
             presurveyLink : 'google.com',
             postsurveyLink : 'google.com',
-            codeword_AssignStatus : '0/0'
+            codewordAssignStatus : '0/0'
         },
         {
             course_name : 'NETWORK SECURITY',
@@ -105,7 +105,7 @@ class CourseSeeder {
             endDate : 'Dec 10, 2019',
             presurveyLink : 'google.com',
             postsurveyLink : 'google.com',
-            codeword_AssignStatus : '0/0'
+            codewordAssignStatus : '0/0'
         }    
     ]
     

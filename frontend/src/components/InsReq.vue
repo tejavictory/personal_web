@@ -6,8 +6,8 @@
             <table class="ui single line table">
             <thead>
                 <tr>
-                <th>Username</th>
-                <th>Status</th>
+                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Username</th>
+                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -16,8 +16,8 @@
                     :user="item">
                 <td>{{ item.username }}</td>
                 <td v-if="item.status === 'Pending'">
-                    <button class="ui button blue" v-on:click="approve(item)"><i class="check circle icon"></i></button>
-                    <button class="ui button red" v-on:click="reject(item)"><i class="close icon"></i></button>
+                    <button class="ui button blue" v-on:click="approve(item)"><i class="check circle icon"></i>Approve</button>
+                    <button class="ui button red" v-on:click="reject(item)"><i class="close icon"></i>Reject</button>
                 </td>
                 <td v-else>{{ item.status }}</td>
                 </tr>
@@ -89,3 +89,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+tr{
+    background-color: rgb(203, 228, 250);
+}
+</style>

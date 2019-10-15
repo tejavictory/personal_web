@@ -1,9 +1,9 @@
 <template>
     <div class="ui container">
         <p> Instructor Dashboard Construction in progress... </p>
-        <div class="ui top attached blue button" tabindex="1" v-on:click="showModal">Add Course</div>
+        <div class="ui top attached button inverted" tabindex="1" v-on:click="showModal"><i class="add circle icon"></i>New Course</div>
         <br/>
-        <div class="ui stackable four column grid">            
+        <div class="ui stackable four column grid" id="testing">            
             <InsCourse
                 v-for="item in courses"
                 :key="item.id"
@@ -34,6 +34,14 @@ export default {
     },
     mounted:function() {
         this.fetchCourses()
+        sessionStorage.setItem('transitioncount',0)
+        // $('.column')
+        // .transition('horizontal flip in')
+        // ;
+
+        // $('.column')
+        // .transition('horizontal flip')
+        // ;        
     },
     methods: {
         showModal: function() {
@@ -61,5 +69,12 @@ export default {
 </script>
 
 <style scoped>
-
+.ui.top.attached.button.inverted{
+    color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0)
+}
+.ui.top.attached.button.inverted:hover{
+    color: rgb(255, 242, 242);
+    background-color: rgb(30, 23, 63)
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
 <div>
 <div class="ui pointing stackable container big menu">
-  <div class="item">
+  <div class="item" id="navhead">
     <!-- <img src="/images/logo.png"> -->
     <span class="navhead"> Admin </span>
   </div>
@@ -41,7 +41,13 @@ export default {
 </script>
 
 <style scoped>
- .navhead{
-    font-weight: bold
+ #navhead{
+    font-weight: bold;
+    background-color: rgba(0, 9, 61, 0.705);
+    color:whitesmoke;
  }
+ .menu{
+   background-color: rgb(232, 230, 255)
+ }
+
 </style>

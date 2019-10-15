@@ -1,20 +1,24 @@
 <template>
     <div class="ui container">
         <br/>
-        <div class="ui segment container">
+        <div class="ui container">
             <h2>Codeword Sets.... Under Construction</h2>
-            <button class="ui button blue" v-on:click="showModal()">Add New Codeword Set</button>
+            <button class="ui button fluid inverted" v-on:click="showModal()"><i class="add circle icon"></i>New Codeword Set</button>
         </div>
-
-        <div class="ui styled fluid accordion" v-for="item in sets"
+        <br/>
+        <div class="ui styled fluid accordion" id="accord" v-for="item in sets"
                 :key="item.id"
                 :set="item">
-            <div class="title" v-on:click="openAccordion(item)">
+            <div class="title" style="background-color:rgba(0, 9, 61, 0.705);color:white" v-on:click="openAccordion(item)" >
                 <i class="dropdown icon"></i>
                 {{ item.name }}
             </div>
-            <div class="content">
-                <div class="ui grid" >
+            <div class="content" style="background-color:#eee9ff;color:black">
+                <div class="ui segment">
+                    <strong>Count: </strong>{{words.length}}
+                    <button class="ui button inverted" style="color:black" v-on:click="showModal()">CLONE & EDIT</button>
+                </div>
+                <div class="ui grid">
                     <div class="four wide column" v-for="word in words"
                     :key="word.id">
                      {{ word.codeword }}
@@ -43,8 +47,20 @@ export default {
         this.fetchSets()
     },
     methods: {
+        cloneCreate(item){
+            sessionStorage.setItem('item',item.name)
+        },
         showModal: function() {
-            $('#createSet').modal('show')
+            $('#createSet').modal({
+                onHide: function(){
+                },
+                onShow: function(){
+                }
+                // onApprove: function() {
+                //     console.log('Approve');
+                //     return validateModal()
+                // }
+            }).modal('show')
         },
         fetchSets() {
             axios.get('/getsets', {
@@ -70,8 +86,27 @@ export default {
                 .accordion({
                     animateChildren: true
                 })
+                this.cloneCreate(item)
+                // console.log(document.getElementById('accord').childNodes[0].className)
             ;
         }
     }
 }
 </script>
+
+<style scoped>
+#accord{
+    background-color: aliceblue;
+}
+.ui.button.fluid.inverted{
+    color: rgb(0, 0, 0);
+    background-color: rgba(255, 255, 255, 0)
+}
+.ui.button.fluid.inverted:hover{
+    color: rgb(255, 242, 242);
+    background-color: rgb(30, 23, 63)
+}
+.ui.segment{
+    background-color: rgb(8, 255, 243)
+}
+</style>

@@ -9,7 +9,7 @@
                     <label> End Date: </label> <span>{{ course.endDate }}</span><br/>
                     <label> Pre-Survey Link: </label> <span>{{ course.presurveylink }}</span><br/>
                     <label> Post-Survey Link: </label> <span>{{ course.postsurveylink }}</span><br/>
-                    <label> Codeword: </label> <span class="visible content">{{  }}</span><span class="hidden content">Reveal Codeword</span><br/>
+                    <label> Codeword: </label> <button class="ui button mini inverted">Reveal</button>
                 </div>
             </div>
     </div> 
@@ -37,7 +37,11 @@ export default {
 label{
     font-weight: bold;
 }
-.ui.icon.button{
-    float: right;
+.ui.button{
+    margin-left: 5px;
+}
+.ui.fluid.card{
+    background-color: rgba(146, 204, 255, 0.767);
+    color: rgb(0, 0, 0);
 }
 </style>

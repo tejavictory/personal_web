@@ -1,5 +1,5 @@
 <template>
-    <div class="column">
+    <div class="four wide column">
             <div class="ui fluid card">
                 <div class="content">
                     <label>{{ course.course_name }}</label> 
@@ -16,6 +16,7 @@
                     <label> End Date: </label> <span>{{ course.endDate }}</span><br/>
                     <label> Pre-Survey Link: </label> <span>{{ course.presurveylink }}</span><br/>
                     <label> Post-Survey Link: </label> <span>{{ course.postsurveylink }}</span><br/>
+                    <label> Codewords Status: </label> <span>{{ course.codewordAssignStatus }}</span><br/>
                 </div>
                 <div class="extra content">
                     <button class="ui blue button fluid">Distribute Codewords</button>
@@ -33,6 +34,14 @@ export default {
         course: {
             type: Object,
             required: true
+        }
+    },
+    mounted() {
+        if(sessionStorage.getItem('transitioncount')==0){
+                $('.four.wide.column')
+                .transition('horizontal flip in')
+                ;
+                sessionStorage.setItem('transitioncount',sessionStorage.getItem('transitioncount')+1)
         }
     },
     methods: {
@@ -65,5 +74,9 @@ label{
 }
 .ui.icon.button{
     float: right;
+}
+.ui.fluid.card{
+    background-color: rgba(146, 204, 255, 0.767);
+    color: rgb(0, 0, 0);
 }
 </style>

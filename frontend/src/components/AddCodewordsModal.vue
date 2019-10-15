@@ -1,8 +1,11 @@
 <template>
     <div class="ui modal" id="createSet">
         <i class="close icon"></i>
-        <div class="header">
+        <div v-if="itemprop==null" class="header">
             Add a New Codeword Set
+        </div>
+        <div v-else class="header">
+            Cloning Codewordset
         </div>
         <div class="ui form" @submit.prevent="createSet">
             <div class="fields">
@@ -40,7 +43,7 @@
             </div>
         </div>
         <div class="actions">
-            <div class="ui black deny button">
+            <div class="ui black deny button" v-on:click="refresh()">
             Cancel
             </div>
             <div class="ui positive right labeled icon button" id="done" v-on:click="createSet">
@@ -59,6 +62,10 @@ export default {
         $('#validname').hide()
         $('#violations').hide()
         $('#done').hide()
+        if(sessionStorage.getItem('item')!=null){
+            this.itemprop = sessionStorage.getItem('item')
+            this.fetchwordsForCloning(sessionStorage.getItem('item'))
+        }
     },
     data() {
         return {
@@ -68,10 +75,29 @@ export default {
             validname: 'no',
             validwords: 'no',
             codewords: '',
-            type: ''
+            type: '',
+            itemprop: null
         }
     },
     methods: {
+        fetchwordsForCloning(name) {
+                        axios.get('/getWordsSet/'+name, {
+            // headers: {
+            //             Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+            //         },
+           }).then(response => {
+                this.codewords = response.data.data
+                var i = 0
+                for(i=0;i<this.codewords.length;i++){
+                    var node = document.createElement("div");
+                    node.className = "four wide column"
+                    var textnode = document.createElement("input");
+                    textnode.value = this.codewords[i].codeword
+                    node.appendChild(textnode);
+                    document.getElementById("grid").appendChild(node);
+                }
+            })
+        },
         validateName() {
             axios.get('/isUniqueName/'+this.csname,{                
             })
@@ -136,7 +162,7 @@ export default {
                         document.getElementById("grid").childNodes[i].childNodes[0].style.backgroundColor = "#ff0000"
                         document.getElementById("grid").childNodes[j].childNodes[0].style.backgroundColor = "#ff0000"
                         document.getElementById("grid").childNodes[i].setAttribute("data-tooltip",
-                            document.getElementById("grid").childNodes[i].getAttribute("data-tooltip")+"<strong>Hard rule</strong>: Word Similarity more than 70% with "+words[j]+" ")
+                            document.getElementById("grid").childNodes[i].getAttribute("data-tooltip")+"Hard rule: Word Similarity more than 70% with "+words[j]+" ")
                         document.getElementById("grid").childNodes[j].setAttribute("data-tooltip",
                             document.getElementById("grid").childNodes[j].getAttribute("data-tooltip")+"Hard rule: Word Similarity more than 70% with "+words[i]+" ")
                         hardcount++
@@ -207,7 +233,7 @@ export default {
                     this.createWords(this.codewords[i])
                 }
                 // this.createWords()
-                // this.$router.go()
+                this.$router.go()
             })
             .catch(error => {
                 // clear form inputs
@@ -270,6 +296,9 @@ export default {
             var sortStr1 = str1.split('').sort().join('')
             var sortStr2 = str2.split('').sort().join('')
             return (sortStr1 === sortStr2);
+        },
+        refresh () {
+            this.$router.go()
         }
     }
 }
