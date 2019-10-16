@@ -12,6 +12,15 @@ class CodewordController {
         })
     }
 
+    async getCodeword({ response, params: {id} }) {
+      const codeword = await Codeword.find(id)
+  
+      response.status(200).json({
+        message: 'Here is your codewords.',
+        data: codeword
+      })
+  }
+
     async getWordsSet({ request, response, params: { setname } }) {
       const codewords = await Codeword.query().where('codewordset_name', '=', setname).fetch()
   

@@ -19,7 +19,7 @@
                     <label> Codewords Status: </label> <span>{{ course.codewordAssignStatus }}</span><br/>
                 </div>
                 <div class="extra content">
-                    <button class="ui blue button fluid">Distribute Codewords</button>
+                    <button class="ui blue button fluid" v-on:click="distribute()">Distribute Codewords</button>
                 </div>
             </div>
     </div> 
@@ -30,6 +30,12 @@
 <script>
 export default {
     name: 'InsCourse',
+    data() {
+        return {
+            students: null,
+            codewords: null
+        }
+    },
     props: {
         course: {
             type: Object,
@@ -59,11 +65,57 @@ export default {
         updateCourse() {
             this.$store.commit('changeCourse',this.course)
             // $('#editCourse').modal('show')
+        },
+        distribute() {
+            axios.get('/getStudents/'+this.course.id,{})
+            .then(response => {
+                this.students = response.data.data
+                if(this.course.codewordset!=null && this.students.length>0){
+                    this.getWordsAndContinue()
+                }
+            })
+            .catch(error => { 
+            })   
+        },
+        getWordsAndContinue() {
+            axios.get('/getWordsSet/'+this.course.codewordset,{})
+            .then(response => {
+                this.codewords = response.data.data
+                if(this.codewords.length>=this.students.length){
+                    console.log('good')
+                    var i = 0
+                    var array = new Array()
+                    for(i=0;i<this.codewords.length;i++){
+                        array.push(this.codewords[i].id)
+                    }
+                            for(i = array.length-1; i > 0; i--){
+                            const j = Math.floor(Math.random() * i)
+                            const temp = array[i]
+                            array[i] = array[j]
+                            array[j] = temp
+                            }
+                    for(i=0;i<this.students.length;i++){
+                            axios.post('/updateUserCourse/'+this.course.id,{
+                                email: this.students[i].email,
+                                codewordid: array[i]
+                            })
+                            .then(response => {
+                                console.log(response.data.data)
+                            })
+                            .catch(error => { 
+                            }) 
+                    }
+                }
+            })
+            .catch(error => { 
+            })   
         }
     }    
 
 }
 </script>
+
+
 
 <style scoped>
 *{
@@ -79,4 +131,5 @@ label{
     background-color: rgba(146, 204, 255, 0.767);
     color: rgb(0, 0, 0);
 }
+
 </style>

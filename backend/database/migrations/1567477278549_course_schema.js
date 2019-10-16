@@ -14,6 +14,8 @@ class CourseSchema extends Schema {
       table.text('presurveylink').nullable()
       table.text('postsurveylink').nullable()
       table.text('codewordAssignStatus').nullable()
+      table.string('codewordset',80).nullable()
+      table.foreign('codewordset').references('codewordsets.name').onDelete('cascade')
       table.timestamps()
     })
   }

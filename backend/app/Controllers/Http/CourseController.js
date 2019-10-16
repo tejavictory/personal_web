@@ -60,6 +60,15 @@ class CourseController {
           data: courses
         })
       }
+
+      async getStudents({ request, response, params: { id } }) {
+        const course = await Course.find(id)
+        const students = await course.users().fetch()
+        response.status(200).json({
+          message: 'Here are your students.',
+          data: students
+        })
+      }
     
       async update({ request, response, params: { id } }) {
         const data = request.post()
@@ -82,6 +91,20 @@ class CourseController {
     
         response.status(200).json({
           message: 'Successfully updated this course.',
+          data: course
+        })
+      }
+
+      async assignSet({ request, response, params: { course_name } }) {
+        const setname = request.input('setname')
+
+        var course = await Course.findBy('course_name',course_name)
+        
+        course.codewordset = setname
+        await course.save()
+        
+        response.status(200).json({
+          message: 'Successfully updated set for this course.',
           data: course
         })
       }

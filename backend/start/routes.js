@@ -37,13 +37,19 @@ Route.post('/createset','CodewordsetController.store')
 Route.post('/updateset/:id','CodewordsetController.update')
 Route.get('/getsets','CodewordsetController.index')
 Route.get('/getWordsSet/:setname', 'CodewordController.getWordsSet')
+Route.get('/getCodeword/:id', 'CodewordController.getCodeword')
 Route.get('/reqUsers','InsrequestController.index')
 Route.post('/reqIns','InsrequestController.store')
 Route.post('/updatereq/:username','InsrequestController.update')
 Route.post('/updaterole/:username','UserController.update')
 Route.get('/getreqstat','InsrequestController.getreq')
 Route.get('/isUniqueName/:name','CodewordsetController.isUniqueName')
-
+Route.post('/assignSet/:course_name', 'CourseController.assignSet')
+Route.get('/getStudents/:id','CourseController.getStudents')
+Route.get('/getusercourses','UsercourseController.index')
+Route.post('/updateHidden/:courseid','UsercourseController.updateHidden')
+Route.post('/updateUserCourse/:courseid','UsercourseController.updateUserCourse')
+Route.post('/getUserCourse/:courseid','UsercourseController.getUserCourse')
 
 
 

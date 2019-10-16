@@ -56,7 +56,7 @@
             <div class="field">
             <label>Codeword Set</label>
             <div class="ui selection dropdown">
-                <input type="hidden" name="codewordsets">
+                <input type="hidden" id="setname" name="codewordsets" v-model="cset" @change="getsetname()">
                 <i class="dropdown icon" v-on:click="showsets"></i>
                 <div class="default text">Codeword Sets</div>
                 <div class="menu">
@@ -90,13 +90,17 @@ export default {
             cenddate: '',
             cpresurvey: '',
             cpostsurvey: '',
-            cassignstat: '',
+            cassignstat: '0/0',
             cstudents: [],
             insEmail: '',
             sets: '',
+            cset: ''
         }
     },
     methods: {
+        getsetname() {
+            this.cset = $('.ui.selection.dropdown').dropdown('get text');
+        },
         formatStudents: function () {
         },
         startdatepick: function () {
@@ -115,6 +119,19 @@ export default {
                 codewordAssignStatus: this.cassignstat,
                 insEmail: this.$store.getters.useremail || localStorage.getItem('useremail'),
                 users: sessionStorage.getItem('addstu').split(',')
+            })
+            .then(response => {
+                // redirect to user home
+                this.assignSet()
+            })
+            .catch(error => {
+                // clear form inputs
+                this.cname = error
+            })
+        },
+        assignSet() {
+            axios.post('/assignSet/'+this.cname,{
+                setname: this.cset
             })
             .then(response => {
                 // redirect to user home

@@ -8,8 +8,11 @@ class UserCourseSchema extends Schema {
     this.create('user_course', (table) => {
       table.string('email',80).index('email')
       table.integer('course_id').unsigned().index('course_id')
+      table.integer('codeword_id').unsigned().index('codeword_id')
+      table.integer('hidden').nullable()
       table.foreign('email').references('users.email').onDelete('cascade')
       table.foreign('course_id').references('courses.id').onDelete('cascade')
+      table.foreign('codeword_id').references('codewords.id').onDelete('cascade')
     })
   }
 
