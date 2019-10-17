@@ -1,6 +1,6 @@
 <template>
     <div class="ui container">
-        <div class="ui pointing stackable container big menu">
+        <div id="temp" class="ui pointing stackable container big menu">
         <div class="header item">
             Codeword App
         </div>
@@ -114,5 +114,11 @@ export default {
 </script>
 
 <style scoped>
-
+.header.item{
+  background-color: rgb(16, 56, 104);
+  color: white;
+}
+#temp{
+  background-color:#97CAEF
+}
 </style>

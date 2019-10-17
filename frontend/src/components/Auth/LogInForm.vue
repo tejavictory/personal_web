@@ -8,7 +8,6 @@
         :type="notification.type"
         v-if="notification.message"
       />
-
       <form class="ui form" @submit.prevent="login">
         <div class="field">
           <label>Email</label>

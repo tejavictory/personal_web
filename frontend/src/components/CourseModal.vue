@@ -12,16 +12,16 @@
                 </div>
                 <div class="field">
                 <label>Start Date</label>
-                    <div class="ui calendar" id="startdate_calendar" v-on:click="startdatepick">
+                    <div class="ui calendar" id="startdate_calendar" >
                         <div class="ui input left icon">
-                            <i class="calendar icon"></i>
+                            <i class="calendar icon" v-on:click="startdatepick()"></i>
                             <input type="text" placeholder="Start Date" v-model="cstartdate">
                         </div>
                     </div>
                 </div>
                 <div class="field">
                 <label>End Date</label>
-                    <div class="ui calendar" id="enddate_calendar" v-on:click="enddatepick">
+                    <div class="ui calendar" id="enddate_calendar">
                         <div class="ui input left icon">
                             <i class="calendar icon"></i>
                             <input type="text" placeholder="End Date"  v-model="cenddate">
@@ -57,7 +57,7 @@
             <label>Codeword Set</label>
             <div class="ui selection dropdown">
                 <input type="hidden" id="setname" name="codewordsets" v-model="cset" @change="getsetname()">
-                <i class="dropdown icon" v-on:click="showsets"></i>
+                <i class="dropdown icon"></i>
                 <div class="default text">Codeword Sets</div>
                 <div class="menu">
                     <span class="item"
@@ -97,6 +97,12 @@ export default {
             cset: ''
         }
     },
+    mounted() {
+        this.showsets()
+        $(function() {
+            $('.ui.selection.dropdown').dropdown()
+        });
+    },
     methods: {
         getsetname() {
             this.cset = $('.ui.selection.dropdown').dropdown('get text');
@@ -104,7 +110,7 @@ export default {
         formatStudents: function () {
         },
         startdatepick: function () {
-            $('#startdate_calendar').calendar({type:'date'})
+            $('#startdate_calendar').calendar()
         },
         enddatepick: function () {
             $('#enddate_calendar').calendar({type:'date'})
@@ -169,7 +175,6 @@ export default {
                 this.sets = response.data.data
                 // redirect to user home
                 // this.$router.go()
-                $('.ui.selection.dropdown').dropdown('show')
             })
             .catch(error => {
                 // clear form inputs

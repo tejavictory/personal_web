@@ -87,6 +87,32 @@ class UserController {
         })
       }
 
+      async mailresetpwdlink({ request, response }) {
+        const Mail = use('Mail')
+
+        await Mail.raw('<html><body>Your account is requested for password reset. <a href="http://192.168.0.33:8080/#/resetpassword">Please click here</a></body><html>', (message) => {
+          message.from('codewordsapp@gmail.com')
+          message.to('s533708@nwmissouri.edu')
+        })
+    
+        response.status(200).json({
+          message: 'Successfully sent mail.',
+        })
+      }
+
+      async resetpwd({ request, response }) {
+        const Mail = use('Mail')
+
+        await Mail.raw('Your account is requested for password reset. <a href="http://192.168.0.33:8080/#/resetpassword">Please click here</a>', (message) => {
+          message.from('codewordsapp@gmail.com')
+          message.to('s533976@nwmissouri.edu')
+        })
+    
+        response.status(200).json({
+          message: 'Successfully sent mail.',
+        })
+      }
+
 
 }
 

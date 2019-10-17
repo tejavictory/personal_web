@@ -50,6 +50,6 @@ Route.get('/getusercourses','UsercourseController.index')
 Route.post('/updateHidden/:courseid','UsercourseController.updateHidden')
 Route.post('/updateUserCourse/:courseid','UsercourseController.updateUserCourse')
 Route.post('/getUserCourse/:courseid','UsercourseController.getUserCourse')
-
+Route.get('/mailresetpwdlink','UserController.mailresetpwdlink')
 
 
