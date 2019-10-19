@@ -83,7 +83,7 @@ export default {
         fetchwordsForCloning(name) {
                         axios.get('/getWordsSet/'+name, {
             // headers: {
-            //             Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+            //             Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
             //         },
            }).then(response => {
                 this.codewords = response.data.data
@@ -223,7 +223,7 @@ export default {
         createSet: function() {
             axios.post('/createset',{
                 name: this.csname,
-                creator: localStorage.getItem('username'),
+                creator: sessionStorage.getItem('username'),
                 type: this.type||'SMALL'
             })
             .then(response => {

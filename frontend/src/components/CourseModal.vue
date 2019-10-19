@@ -123,7 +123,7 @@ export default {
                 presurveylink: this.cpresurvey,
                 postsurveylink: this.cpostsurvey,
                 codewordAssignStatus: this.cassignstat,
-                insEmail: this.$store.getters.useremail || localStorage.getItem('useremail'),
+                insEmail: this.$store.getters.useremail || sessionStorage.getItem('useremail'),
                 users: sessionStorage.getItem('addstu').split(',')
             })
             .then(response => {

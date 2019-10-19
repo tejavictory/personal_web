@@ -45,10 +45,10 @@ export default {
         fetchUsers: function() {
             axios.get('/users', {
                 headers: {
-                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                        Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
                     }
                 // params: {
-                //         email: this.$store.getters.useremail || localStorage.getItem('useremail')
+                //         email: this.$store.getters.useremail || sessionStorage.getItem('useremail')
                 //     }
            }).then(response => {
                 // this.$store.commit('changeCourses',response.data.data)

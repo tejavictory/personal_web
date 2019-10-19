@@ -61,7 +61,7 @@
             }
         },
         beforeRouteEnter (to, from, next) {
-            const token = localStorage.getItem('auth-token')
+            const token = sessionStorage.getItem('auth-token')
 
             return token ? next('/') : next()
         },
@@ -73,8 +73,18 @@
                         password: this.password,
                     })
                     .then(response => {
-                        // save token in localstorage
-                        localStorage.setItem('auth-token', response.data.data.token)
+                      if(response.data.status == 'mail not confirmed'){
+                          $('body')
+                            .toast({
+                              displayTime: 5000,
+                              class: 'error',
+                              message: 'Please confirm your email'
+                            })
+                          ;
+                          return
+                      }
+                        // save token in sessionStorage
+                        sessionStorage.setItem('auth-token', response.data.data.token)
                         this.$store.commit('changeUserEmail',this.email)
                         this.fetchAuthenticatedUser()
                         this.getRole()
@@ -92,7 +102,7 @@
                     })
             },
             fetchAuthenticatedUser () {
-                const token = localStorage.getItem('auth-token')
+                const token = sessionStorage.getItem('auth-token')
 
                 axios
                     .get('user/me', {
@@ -107,7 +117,7 @@
                     })
             },
             getRole () {
-                const token = localStorage.getItem('auth-token')
+                const token = sessionStorage.getItem('auth-token')
 
                 axios
                     .get('user/me', {

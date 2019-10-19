@@ -33,7 +33,7 @@ export default {
   },
   methods: {
         logout() {
-            localStorage.removeItem('auth-token')
+            sessionStorage.removeItem('auth-token')
             this.$router.push('/login')
         },
         isActive: function (menuItem) {

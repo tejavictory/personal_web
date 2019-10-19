@@ -4,9 +4,12 @@
         <!-- <h3>Reset Password</h3> -->
         <form class="ui form" @submit.prevent="reset">
             <div class="field">
-                <label>Enter Your Email: </label><input type="email"/>
+                <label>Enter New Password: </label><input type="password"/>
             </div>
-            <button class="ui button">Send Reset Password Link</button>
+            <div class="field">
+                <label>Confirm New Password: </label><input type="password"/>
+            </div>
+            <button class="ui button">Reset Password</button>
         </form>
     </div>
   </div>

@@ -10,7 +10,7 @@ export default {
     name: 'Welcome',
     methods: {
         getDashboard: function () {
-            switch(localStorage.getItem('role')){
+            switch(sessionStorage.getItem('role')){
                 case "Student": this.$router.push('/Student')
                                 break
                 case "Instructor": this.$router.push('/InsDash')

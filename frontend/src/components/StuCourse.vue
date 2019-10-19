@@ -36,7 +36,7 @@ export default {
         }
     },
     mounted() {
-        this.email = localStorage.getItem('useremail')
+        this.email = sessionStorage.getItem('useremail')
         this.getCodeword()
     },
     methods: {

@@ -10,9 +10,9 @@ export default new Vuex.Store({
       type: Object,
       required: true
     },
-    token: localStorage.getItem('auth-token') || '',
+    token: sessionStorage.getItem('auth-token') || '',
     user: {},
-    useremail: localStorage.getItem('useremail'),
+    useremail: sessionStorage.getItem('useremail'),
     courses: [],
     role: ''
   },
@@ -25,14 +25,14 @@ export default new Vuex.Store({
       },
       changeUserEmail(state, useremail) {
         state.useremail = useremail
-        localStorage.setItem('useremail', useremail)
+        sessionStorage.setItem('useremail', useremail)
       },
       changeUser(state, user) {
         state.user = user
       },
       changeUserRole(state, role) {
         state.role = role
-        localStorage.setItem('role', role)
+        sessionStorage.setItem('role', role)
       }
   },
   actions: {

@@ -65,7 +65,7 @@ export default {
         fetchSets() {
             axios.get('/getsets', {
             // headers: {
-            //             Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+            //             Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
             //         },
            }).then(response => {
                 this.sets = response.data.data
@@ -74,7 +74,7 @@ export default {
         fetchwords(item) {
                         axios.get('/getWordsSet/'+item.name, {
             // headers: {
-            //             Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+            //             Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
             //         },
            }).then(response => {
                 this.words = response.data.data

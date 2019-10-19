@@ -45,10 +45,10 @@ export default {
         fetchUsers: function() {
             axios.get('/reqUsers', {
                 headers: {
-                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                        Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
                     }
                 // params: {
-                //         email: this.$store.getters.useremail || localStorage.getItem('useremail')
+                //         email: this.$store.getters.useremail || sessionStorage.getItem('useremail')
                 //     }
            }).then(response => {
                 // this.$store.commit('changeCourses',response.data.data)
@@ -58,7 +58,7 @@ export default {
         approve: function(item) {
             axios.post('/updatereq/'+item.username, {
                 headers: {
-                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                        Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
                     },
                 status: 'Approved' 
             }).then(response => {
@@ -69,7 +69,7 @@ export default {
         reject: function(item) {
             axios.post('/updatereq/'+item.username, {
                 headers: {
-                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                        Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
                     },
                 status: 'Rejected' 
             }).then(response => {
@@ -79,7 +79,7 @@ export default {
         updateRole: function(item) {
             axios.post('/updaterole/'+item.username, {
                 headers: {
-                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                        Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
                 },
                 role_name: 'Instructor'
             }).then(response => {

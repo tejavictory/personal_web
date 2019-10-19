@@ -76,7 +76,8 @@ export default {
       notification: {
         message: '',
         type: ''
-      }
+      },
+      usertoken: ''
     }
   },
   computed: {
@@ -85,7 +86,7 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    const token = localStorage.getItem('auth-token')
+    const token = sessionStorage.getItem('auth-token')
     return token ? next('/') : next()
   },
   methods: {
@@ -100,8 +101,25 @@ export default {
           role_name: 'Student'
         })
         .then(response => {
-          // save token in localstorage
-          localStorage.setItem('auth-token', response.data.data.token)
+          // save token in sessionStorage
+          this.usertoken = response.data.data.token
+          console.log(sessionStorage.getItem('authtoken'))
+                      axios.post('/confirmEmail/'+this.email, {
+                      // headers: {
+                      //             Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
+                      //         },
+                              usertoken: this.usertoken
+                        }).then(response => {
+                          console.log('Confirmation email sent.')
+                          $('body')
+                            .toast({
+                                  displayTime: 5000,
+                                  class: 'success',
+                              message: 'Confirmation link sent to email.'
+                            })
+                          ;
+                      })
+          // sessionStorage.setItem('auth-token', response.data.data.token)
           // redirect to user home
           this.$router.push('/')
         })

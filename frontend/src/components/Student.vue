@@ -13,7 +13,7 @@
             </a>
         </div>
         </div>
-        <!-- <div class="ui segment" v-if="localstorage.getItem('reqstat')==='Pending'">
+        <!-- <div class="ui segment" v-if="sessionStorage.getItem('reqstat')==='Pending'">
             Instructor Previleges Pending
         </div> -->
         <div>
@@ -50,11 +50,11 @@ export default {
     },
     methods: {
         logout() {
-            localStorage.removeItem('auth-token')
+            sessionStorage.removeItem('auth-token')
             this.$router.push('/login')
         },
         fetchUserEmail() {
-                const token = localStorage.getItem('auth-token')
+                const token = sessionStorage.getItem('auth-token')
 
                 axios
                     .get('user/me', {
@@ -65,7 +65,7 @@ export default {
                     .then(response => {
                         this.username = response.data.data.username
                         this.email = response.data.data.email
-                        localStorage.setItem('username',response.data.data.username)
+                        sessionStorage.setItem('username',response.data.data.username)
                         this.$store.commit('changeUserEmail',response.data.data.email)
                     })
 
@@ -73,10 +73,10 @@ export default {
         fetchUserCourses() {
             axios.get('/usercourses', {
             headers: {
-                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                        Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
                     },
              params: {
-                        email: this.$store.getters.useremail || localStorage.getItem('useremail')
+                        email: this.$store.getters.useremail || sessionStorage.getItem('useremail')
                     }
            }).then(response => {
                 // this.$store.commit('changeCourses',response.data.data)
@@ -86,9 +86,9 @@ export default {
         reqIns() {
             axios.post('/reqIns', {
             headers: {
-                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                        Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
                     },
-                    username: this.$store.getters.username || localStorage.getItem('username'),
+                    username: this.$store.getters.username || sessionStorage.getItem('username'),
                     status: 'Pending'
            }).then(response => {
                 this.insstat = response.data.data
@@ -96,17 +96,17 @@ export default {
         },
         fetchReqStatus() {
             try{
-            axios.get('/getreqstat/'+localStorage.getItem('username'), {
+            axios.get('/getreqstat/'+sessionStorage.getItem('username'), {
             headers: {
-                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                        Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
                     }
            }).then(response => {
                 this.reqstat = response.data.status
-                localStorage.setItem('reqstat',response.data.status)
+                sessionStorage.setItem('reqstat',response.data.status)
             })
             }
             catch(error){
-                localStorage.setItem('reqstat','error')
+                sessionStorage.setItem('reqstat','error')
             }
         }
     }

@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         logout () {
-            localStorage.removeItem('tweetr-token')
+            sessionStorage.removeItem('tweetr-token')
             this.$router.push('/login')
         },
         fetchUserCourses() {
@@ -39,10 +39,10 @@ export default {
         //     })
             axios.get('/usercourses', {
             headers: {
-                        Authorization: `Bearer ${localStorage.getItem('auth-token')}`
+                        Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
                     },
              params: {
-                        email: this.$store.getters.useremail || localStorage.getItem('useremail')
+                        email: this.$store.getters.useremail || sessionStorage.getItem('useremail')
                     }
            }).then(response => {
                 // this.$store.commit('changeCourses',response.data.data)

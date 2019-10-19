@@ -33,7 +33,7 @@ export default {
             this.$root.$emit('AdminNavContent', menuItem)
         },
         logout() {
-            localStorage.removeItem('auth-token')
+            sessionStorage.removeItem('auth-token')
             this.$router.push('/login')
         },
     }

@@ -12,6 +12,7 @@ import InsDash from '@/components/InsDash'
 import Secure from '@/components/Secure'
 import Welcome from '@/components/Welcome'
 import CodewordSets from '@/components/CodewordSets'
+import Confirm from '@/components/Confirm'
 
 Vue.use(Router)
 
@@ -34,6 +35,10 @@ export default new Router({
     {
       path: '/resetpassword',
       component: ResetPassword
+    },
+    {
+      path: '/confirm/:token',
+      component: Confirm,
     },
     {
       path: '/secure',
