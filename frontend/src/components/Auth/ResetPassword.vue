@@ -2,19 +2,40 @@
   <div class="ui stackable three column centered grid container">
     <div class="column">
         <!-- <h3>Reset Password</h3> -->
-        <form class="ui form" @submit.prevent="reset">
             <div class="field">
-                <label>Enter Your Email: </label><input type="email"/>
+                <label>Enter Your Email: </label><input type="email" v-model="email"/>
             </div>
-            <button class="ui button">Send Reset Password Link</button>
-        </form>
+            <button class="ui button" v-on:click="resetpwd">Send Reset Password Link</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-    name: 'ResetPassword'
+    name: 'ResetPassword',
+    data() {
+        return {
+            email: ''
+        }
+    },
+    mounted() {
+    },
+    methods: {
+        resetpwd () {
+                      axios.post('/mailresetpwdlink/'+this.email, {
+                        }).then(response => {
+                          console.log('Reset password mail sent')
+                          $('body')
+                            .toast({
+                                  displayTime: 5000,
+                                  class: 'success',
+                              message: 'A link to reset your password has been sent to your email.'
+                            })
+                          ;
+                      })
+        }
+    }
+
 }
 </script>
 

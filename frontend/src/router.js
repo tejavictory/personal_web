@@ -13,6 +13,7 @@ import Secure from '@/components/Secure'
 import Welcome from '@/components/Welcome'
 import CodewordSets from '@/components/CodewordSets'
 import Confirm from '@/components/Confirm'
+import ResetPwdFinal from '@/components/ResetPwdFinal'
 
 Vue.use(Router)
 
@@ -35,6 +36,10 @@ export default new Router({
     {
       path: '/resetpassword',
       component: ResetPassword
+    },
+    {
+      path: '/reset/:token',
+      component: ResetPwdFinal
     },
     {
       path: '/confirm/:token',

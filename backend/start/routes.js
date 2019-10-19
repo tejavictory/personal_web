@@ -50,6 +50,7 @@ Route.get('/getusercourses','UsercourseController.index')
 Route.post('/updateHidden/:courseid','UsercourseController.updateHidden')
 Route.post('/updateUserCourse/:courseid','UsercourseController.updateUserCourse')
 Route.post('/getUserCourse/:courseid','UsercourseController.getUserCourse')
-Route.get('/mailresetpwdlink','UserController.mailresetpwdlink')
-
-
+Route.post('/mailresetpwdlink/:email','UserController.mailresetpwdlink')
+Route.post('/confirmEmail/:email','UserController.mailConfirmation')
+Route.post('/activate','UserController.activate')
+Route.post('/resetfinal','UserController.resetpwd')

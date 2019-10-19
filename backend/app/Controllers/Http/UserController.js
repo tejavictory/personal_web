@@ -31,9 +31,17 @@ class UserController {
     }
 
     async login ({ request, auth, response }) {
+        const email = request.input('email')
+        const user = await User.find(email)
+        if(user.activated==0){
+            return response.json({
+              status: 'mail not confirmed',
+              data: user
+          })
+        }
         try {
             const token = await auth.attempt(
-                request.input('email'),
+                email,
                 request.input('password')
             )
     
@@ -87,31 +95,77 @@ class UserController {
         })
       }
 
-      async mailresetpwdlink({ request, response }) {
-        const Mail = use('Mail')
+      async activate({ auth, request, response }) {
+        var atob = require('atob')
+        var token = request.input('usertoken')
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''))
+        var dataa = JSON.parse(jsonPayload)
 
-        await Mail.raw('<html><body>Your account is requested for password reset. <a href="http://192.168.0.33:8080/#/resetpassword">Please click here</a></body><html>', (message) => {
-          message.from('codewordsapp@gmail.com')
-          message.to('s533708@nwmissouri.edu')
+        const user = await User.findBy('id',dataa.uid)
+  
+        user.activated = 1
+        user.save()
+        return response.json({
+            status: 'success',
+            data: user
         })
-    
+      }
+
+      async mailConfirmation({ request, response, params: {email} }) {
+        const Mail = use('Mail')
+        const token = request.input('usertoken')
+        // '<html><body>Click the following link to confirm your email and activate your codewords app account. <button onclick="activate()">Please click here</button><script>function activate() {var http = new XMLHttpRequest();var url = \'http://localhost:3333/activate\';http.open(\'POST\', url,true);http.setRequestHeader(\'Authorization\', `Bearer ${'+token+'}`);http.onreadystatechange = function() {if(http.readyState == 4 && http.status == 200) {alert(http.responseText);}}http.send();}</script></body><html>'
+        await Mail.raw('<html><body><a href="http://localhost:8080/#/confirm/'+token+'">Click Here</a></body></html>', (message) => {
+          message.from('codewordsapp@gmail.com', 'Codewords Application')
+          message.to(email)
+        })
+ 
+        response.status(200).json({
+          message: 'Successfully sent mail.',
+        })
+      }
+
+      async mailresetpwdlink({ auth, request, response, params: {email} }) {
+        const Mail = use('Mail')
+        const user = await User.find(email)
+        const token = await auth.generate(user)
+        // '<html><body>Click the following link to confirm your email and activate your codewords app account. <button onclick="activate()">Please click here</button><script>function activate() {var http = new XMLHttpRequest();var url = \'http://localhost:3333/activate\';http.open(\'POST\', url,true);http.setRequestHeader(\'Authorization\', `Bearer ${'+token+'}`);http.onreadystatechange = function() {if(http.readyState == 4 && http.status == 200) {alert(http.responseText);}}http.send();}</script></body><html>'
+        await Mail.raw('<html><body><a href="http://localhost:8080/#/reset/'+token.token+'">Click Here to reset your password.</a></body></html>', (message) => {
+          message.from('codewordsapp@gmail.com', 'Codewords Application')
+          message.to(email)
+        })
+
         response.status(200).json({
           message: 'Successfully sent mail.',
         })
       }
 
       async resetpwd({ request, response }) {
-        const Mail = use('Mail')
+        var atob = require('atob')
 
-        await Mail.raw('Your account is requested for password reset. <a href="http://192.168.0.33:8080/#/resetpassword">Please click here</a>', (message) => {
-          message.from('codewordsapp@gmail.com')
-          message.to('s533976@nwmissouri.edu')
-        })
-    
+        const password = request.input('password')
+
+        var token = request.input('usertoken')
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''))
+        var dataa = JSON.parse(jsonPayload)
+        const user = await User.findBy('email',dataa.uid)
+
+        user.password = password
+        user.save()
         response.status(200).json({
-          message: 'Successfully sent mail.',
+          message: 'Password reset successful.',
         })
       }
+
+      
 
 
 }
