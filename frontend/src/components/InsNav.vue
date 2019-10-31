@@ -3,15 +3,18 @@
   <div class="header item">
     Codeword App
   </div>
+  <router-link to="/InsDash">
     <a class="item" v-on:click="setActive('insdash')" :class="{ active: isActive('insdash') }">
-          <router-link to="/InsDash"> Instructor Dashboard </router-link>
-    </a>
+           Instructor Dashboard 
+    </a></router-link>
+    <router-link to="/InsStu">
     <a class="item" v-on:click="setActive('studash')" :class="{ active: isActive('studash') }">
-          <router-link to="/InsStu"> Student Dashboard </router-link>
-    </a>
+           Student Dashboard 
+    </a></router-link>
+     <router-link to="/Codewords">
     <a class="item" v-on:click="setActive('cdwd')" :class="{ active: isActive('cdwd') }">
-          <router-link to="/Codewords"> Codewords Dashboard</router-link>
-    </a>
+          Codewords Dashboard
+    </a></router-link>
   <div class="right menu">
     <a class="item" v-on:click="logout">
       Logout
@@ -51,7 +54,7 @@ export default {
   color: black;
 }
 #temp{
-  background-color:#97CAEF
+  background-color:rgb(228, 228, 228);
 }
 a:hover{
   color: rgb(16, 56, 104);

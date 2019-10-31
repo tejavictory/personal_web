@@ -189,7 +189,7 @@ label{
     float: right;
 }
 .ui.fluid.card{
-    background-color: rgba(146, 204, 255, 0.767);
+    background-color: rgb(228, 228, 228);;
     color: rgb(0, 0, 0);
 }
 

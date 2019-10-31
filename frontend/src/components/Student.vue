@@ -17,9 +17,9 @@
             Instructor Previleges Pending
         </div> -->
         <div>
-            <button class="ui button blue" v-on:click="reqIns">Request Instructor Previleges</button>
+            <button class="ui button fluid inverted green" v-on:click="reqIns" style="font-family: 'Quicksand', sans-serif;">Request Instructor Previleges</button>
         </div>
-        <p> Student Dashboard Construction in progress... </p>
+        <br/>
         <div class="ui stackable four column grid">
             <StuCourse
                 v-for="item in courses"
@@ -114,11 +114,14 @@ export default {
 </script>
 
 <style scoped>
+*{
+    font-family: 'Quicksand', sans-serif;
+}
 .header.item{
   background-color: rgb(16, 56, 104);
   color: white;
 }
 #temp{
-  background-color:#97CAEF
+  background-color:rgb(228, 228, 228)
 }
 </style>

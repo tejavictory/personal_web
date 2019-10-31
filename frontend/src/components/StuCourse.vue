@@ -2,7 +2,7 @@
     <div class="column">
             <div class="ui fluid card">
                 <div class="content">
-                    <div class="header">{{ course.course_name }}</div>
+                    <div class="header" style="font-family: 'Quicksand', sans-serif;text-align:center;">{{ course.course_name }}</div>
                 </div>
                 <div class="content">
                     <label> Start Date: </label> <span>{{ course.startDate }}</span><br/>
@@ -79,11 +79,7 @@ export default {
 
 <style scoped>
 *{
-    font-family: 'Exo-2', sans-serif;
-}
-.header{
-    font-family: 'Exo-2', sans-serif;
-
+    font-family: 'Quicksand', sans-serif;
 }
 label{
     font-weight: bold;
@@ -92,7 +88,7 @@ label{
     margin-left: 5px;
 }
 .ui.fluid.card{
-    background-color: rgba(146, 204, 255, 0.767);
+    background-color: rgb(228, 228, 228);
     color: rgb(0, 0, 0);
 }
 </style>

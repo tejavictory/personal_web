@@ -2,18 +2,17 @@
     <div class="ui container">
         <br/>
         <div class="ui container">
-            <h2>Codeword Sets.... Under Construction</h2>
-            <button class="ui button fluid inverted" v-on:click="showModal()"><i class="add circle icon"></i>New Codeword Set</button>
+            <button class="ui button fluid inverted black" v-on:click="showModal()"><i class="add circle icon"></i>New Codeword Set</button>
         </div>
         <br/>
         <div class="ui styled fluid accordion" id="accord" v-for="item in sets"
                 :key="item.id"
                 :set="item">
-            <div class="title" style="background-color:rgba(0, 9, 61, 0.705);color:white" v-on:click="openAccordion(item)" >
+            <div class="title" style="background-color:rgb(228, 228, 228);color:black" v-on:click="openAccordion(item)" >
                 <i class="dropdown icon"></i>
                 {{ item.name }}
             </div>
-            <div class="content" style="background-color:#eee9ff;color:black">
+            <div class="content" style="background-color:rgb(228, 228, 228);color:black">
                 <div class="ui segment">
                     <strong>Count: </strong>{{words.length}}
                     <button class="ui button inverted" style="color:black" v-on:click="showModal()">CLONE & EDIT</button>
@@ -96,17 +95,17 @@ export default {
 
 <style scoped>
 #accord{
-    background-color: aliceblue;
+    background-color: rgb(128, 128, 128);
 }
 .ui.button.fluid.inverted{
     color: rgb(0, 0, 0);
     background-color: rgba(255, 255, 255, 0)
 }
 .ui.button.fluid.inverted:hover{
-    color: rgb(255, 242, 242);
-    background-color: rgb(30, 23, 63)
+    color: black;
+    background-color: rgb(228, 228, 228)
 }
 .ui.segment{
-    background-color: rgb(8, 255, 243)
+    background-color: rgb(216, 208, 208)
 }
 </style>
