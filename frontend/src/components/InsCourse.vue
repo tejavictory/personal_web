@@ -16,10 +16,10 @@
                     <label> End Date: </label> <span>{{ course.endDate }}</span><br/>
                     <label> Pre-Survey Link: </label> <span>{{ course.presurveylink }}</span><br/>
                     <label> Post-Survey Link: </label> <span>{{ course.postsurveylink }}</span><br/>
-                    <label> Codewords Status: </label> <span>{{ course.codewordAssignStatus }}</span><br/>
+                    <label> Codewords Status: </label> <span>{{ this.codewordAssignStatus }}</span><br/>
                 </div>
-                <div class="extra content">
-                    <button class="ui blue button fluid" v-on:click="distribute()">Distribute Codewords</button>
+                <div class="extra content" v-if="disbtn == 0">
+                    <button class="ui blue button fluid" id="disbtn" v-on:click="distribute()">Distribute Codewords</button>
                 </div>
             </div>
     </div> 
@@ -33,7 +33,9 @@ export default {
     data() {
         return {
             students: null,
-            codewords: null
+            codewords: null,
+            disbtn: 0,
+            codewordAssignStatus: 'NULL'
         }
     },
     props: {
@@ -49,6 +51,7 @@ export default {
                 ;
                 sessionStorage.setItem('transitioncount',sessionStorage.getItem('transitioncount')+1)
         }
+        this.getUserCourses()
     },
     methods: {
         delCourse() {
@@ -73,6 +76,7 @@ export default {
                 if(this.course.codewordset!=null && this.students.length>0){
                     this.getWordsAndContinue()
                 }
+
             })
             .catch(error => { 
             })   
@@ -101,11 +105,31 @@ export default {
                             })
                             .then(response => {
                                 console.log(response.data.data)
+                                this.codewordAssignStatus = '0/'+this.students.length
                             })
                             .catch(error => { 
                             }) 
                     }
                 }
+            })
+            .catch(error => { 
+            })   
+        },
+        getUserCourses() {
+            axios.post('/getusercourses',{
+            })
+            .then(response => {
+                var allusercourses = response.data.data
+                var i=0
+                var count = 0
+                for(i=0;i<allusercourses.length;i++){
+                    if(allusercourses[i].course_id == this.course.id){
+                        if(allusercourses[i].hidden == 0){
+                            count++
+                        }
+                    }
+                }
+                this.codewordAssignStatus = count+'/'+allusercourses.length
             })
             .catch(error => { 
             })   

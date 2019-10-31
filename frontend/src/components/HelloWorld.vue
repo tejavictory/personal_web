@@ -33,7 +33,7 @@ a {
   color: #42b983;
 }
 .ui.button{
-  background-color: rgb(44, 44, 102);
+  background-color: #1B1C1D;
   width: 200px;
   color: white
 }

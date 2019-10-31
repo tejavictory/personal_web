@@ -5,10 +5,15 @@
             Add a New Course
         </div>
         <div class="ui form" @submit.prevent="createCourse">
+                  <Notification
+                        :message="notification.message"
+                        :type="notification.type"
+                        v-if="notification.message"
+                    />
             <div class="fields">
                 <div class="field">
                 <label>Course Name</label>
-                <input type="text" placeholder="Course Name" v-model="cname">
+                <input type="text" placeholder="Course Name" v-model="cname" required>
                 </div>
                 <div class="field">
                 <label>Start Date</label>
@@ -81,8 +86,13 @@
 </template>
 
 <script>
+import Notification from '@/components/Notification'
+
 export default {
     name: 'CourseModal',
+    components: {
+        Notification
+    },
     data() {
         return {
             cname: '',
@@ -94,7 +104,11 @@ export default {
             cstudents: [],
             insEmail: '',
             sets: '',
-            cset: ''
+            cset: '',
+            notification: {
+                message: '',
+                type: ''
+            }
         }
     },
     mounted() {
@@ -127,12 +141,15 @@ export default {
                 users: sessionStorage.getItem('addstu').split(',')
             })
             .then(response => {
-                // redirect to user home
                 this.assignSet()
             })
             .catch(error => {
                 // clear form inputs
-                this.cname = error
+             // display error notification
+                        this.notification = Object.assign({}, this.notification, {
+                            message: error.response.data.message,
+                            type: error.response.data.status
+                        })    
             })
         },
         assignSet() {
@@ -145,7 +162,10 @@ export default {
             })
             .catch(error => {
                 // clear form inputs
-                this.cname = error
+                        this.notification = Object.assign({}, this.notification, {
+                            message: error.response.data.message,
+                            type: error.response.data.status
+                        })  
             })
         },
         upload: function (evt) {
@@ -173,12 +193,12 @@ export default {
             })
             .then(response => {
                 this.sets = response.data.data
-                // redirect to user home
-                // this.$router.go()
             })
             .catch(error => {
-                // clear form inputs
-                this.cname = error
+                this.notification = Object.assign({}, this.notification, {
+                    message: error.response.data.message,
+                    type: error.response.data.status
+                })  
             })
         }    
     }
