@@ -16,20 +16,28 @@
                     <label> End Date: </label> <span>{{ course.endDate }}</span><br/>
                     <label> Pre-Survey Link: </label> <span>{{ course.presurveylink }}</span><br/>
                     <label> Post-Survey Link: </label> <span>{{ course.postsurveylink }}</span><br/>
+                    <label> Codeword Set: </label> <span>{{ course.codewordset }}</span><br/>
                     <label> Codewords Status: </label> <span>{{ course.codewordAssignStatus }}</span><br/>
                 </div>
-                <div class="extra content">
+                <div class="extra content" v-if="course.distributed != 1">
                     <button class="ui blue button fluid" v-on:click="distribute()">Distribute Codewords</button>
                 </div>
             </div>
+                    <EditCourse v-bind:course="course"/>
+
     </div> 
 
     
 </template>
 
 <script>
+import EditCourse from './EditCourse.vue'
+
 export default {
     name: 'InsCourse',
+    components: {
+        EditCourse
+    },
     data() {
         return {
             students: null,
@@ -64,7 +72,7 @@ export default {
         },
         updateCourse() {
             this.$store.commit('changeCourse',this.course)
-            // $('#editCourse').modal('show')
+            $('#editCourse').modal('show')
         },
         distribute() {
             axios.get('/getStudents/'+this.course.id,{})
@@ -72,6 +80,16 @@ export default {
                 this.students = response.data.data
                 if(this.course.codewordset!=null && this.students.length>0){
                     this.getWordsAndContinue()
+                }
+                else{
+                        $('body')
+                            .toast({
+                              displayTime: 5000,
+                              class: 'error',
+                              message: 'No Students or No Codewordset assigned for the course.'
+                            })
+                          ;
+                          return
                 }
             })
             .catch(error => { 
@@ -105,9 +123,27 @@ export default {
                             .catch(error => { 
                             }) 
                     }
+
+                }
+                else{
+                        $('body')
+                            .toast({
+                              displayTime: 5000,
+                              class: 'error',
+                              message: 'Codewords less than number of Students'
+                            })
+                          ;
+                          return
                 }
             })
             .catch(error => { 
+            })   
+
+            axios.post('/distributedwords/'+this.course.id,{})
+                                    .then(response => {
+                                        this.$router.go()
+                                    })
+                                    .catch(error => { 
             })   
         }
     }    

@@ -25,15 +25,16 @@ class UserSeeder {
           password : await Hash.make('Amazon@123'),
           firstname : 'KRISHNA',
           lastname : 'TEJA',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533101',
           email : 'raghu@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'RAGHU',
           lastname : 'KIRAN',
-          role_name : 'Student'
+          role_name : 'Student',
+          activated : 1
       },
       {
           username : 'S533102',
@@ -41,152 +42,152 @@ class UserSeeder {
           password : await Hash.make('Amazon@123'),
           firstname : 'SHIVA',
           lastname : 'PATTI',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533103',
           email : 'srinu@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'SRINIVAS',
           lastname : 'RAJU',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533104',
           email : 'jay@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'JAYANTH',
           lastname : 'KAVALI',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533105',
           email : 'kittu@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'KRISHNA',
           lastname : 'BOBBILI',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533106',
           email : 'naveen@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'NAVEEN',
           lastname : 'ADUSUMALLI',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533107',
           email : 'potu@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'PREETHAM',
           lastname : 'POTU',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533108',
           email : 'mahesh@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'MAHESH',
           lastname : 'VITTA',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533109',
           email : 'vithik@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'VITHIK',
           lastname : 'SHERU',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533110',
           email : 'varun@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'VARUN',
           lastname : 'DHAWAN',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533111',
           email : 'ishan@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'ISHAN',
           lastname : 'SHARMA',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533112',
           email : 'babu@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'MOHAN',
           lastname : 'BABU',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533113',
           email : 'saman@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'SAMANTH',
           lastname : 'GOURINENI',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533114',
           email : 'karthik@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'KARTHIK',
           lastname : 'MUTHYALA',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533115 ',
           email : 'satya@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'SATYAVRATH',
           lastname : 'INJAMURI',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533116',
           email : 'vamsee@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'VAMSEE',
           lastname : 'GANGAPATNAM',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533117',
           email : 'abhi@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'ABHIRAM',
           lastname : 'MADUGULA',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533118',
           email : 'yuvasena@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'DURGA',
           lastname : 'PRASAD',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533119',
           email : 'baba@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'BABA',
           lastname : 'BHASKER',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533120',
           email : 'uday@gmail.com',
           password : await Hash.make('Amazon@123'),
           firstname : 'UDAY',
           lastname : 'ALLADI',
-          role_name : 'Student'
-      },
+          role_name : 'Student',
+          activated : 1      },
       {
           username : 'S533122',
           email : 'yaswanth@gmail.com',

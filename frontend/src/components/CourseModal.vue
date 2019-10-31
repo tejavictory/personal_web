@@ -12,19 +12,19 @@
                 </div>
                 <div class="field">
                 <label>Start Date</label>
-                    <div class="ui calendar" id="startdate_calendar" >
+                    <div class="ui calendar" id="rangestart">
                         <div class="ui input left icon">
-                            <i class="calendar icon" v-on:click="startdatepick()"></i>
-                            <input type="text" placeholder="Start Date" v-model="cstartdate">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="Start">
                         </div>
                     </div>
                 </div>
                 <div class="field">
                 <label>End Date</label>
-                    <div class="ui calendar" id="enddate_calendar">
+                    <div class="ui calendar" id="rangeend">
                         <div class="ui input left icon">
-                            <i class="calendar icon"></i>
-                            <input type="text" placeholder="End Date"  v-model="cenddate">
+                        <i class="calendar icon"></i>
+                        <input type="text" placeholder="End">
                         </div>
                     </div>
                 </div>
@@ -102,18 +102,26 @@ export default {
         $(function() {
             $('.ui.selection.dropdown').dropdown()
         });
+        $('#rangestart').calendar({
+            type: 'date',
+            endCalendar: $('#rangeend'),
+            popupOptions: {
+             observeChanges: false
+            }
+        });
+        $('#rangeend').calendar({
+            type: 'date',
+            startCalendar: $('#rangestart'),
+            popupOptions: {
+             observeChanges: false
+            }            
+        });
     },
     methods: {
         getsetname() {
             this.cset = $('.ui.selection.dropdown').dropdown('get text');
         },
         formatStudents: function () {
-        },
-        startdatepick: function () {
-            $('#startdate_calendar').calendar()
-        },
-        enddatepick: function () {
-            $('#enddate_calendar').calendar({type:'date'})
         },
         createCourse() {
             axios.post('/coursecreate',{

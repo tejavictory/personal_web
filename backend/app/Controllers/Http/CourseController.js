@@ -108,6 +108,19 @@ class CourseController {
           data: course
         })
       }
+
+      async distributedwords({ request, response, params: { id } }) {
+
+        var course = await Course.find(id)
+        
+        course.distributed = 1
+        await course.save()
+        
+        response.status(200).json({
+          message: 'Successfully distributed for this course.',
+          data: course
+        })
+      }
     
 
 }

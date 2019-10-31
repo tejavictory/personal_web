@@ -2,20 +2,20 @@
     <div class="ui modal" id="editCourse">
         <i class="close icon"></i>
         <div class="header">
-            Edit Course
+            Edit Course {{ course.course_name }}
         </div>
         <div class="ui form" @submit.prevent="saveCourse">
             <div class="fields">
                 <div class="field">
-                <label>{{ course.course_name }}</label>
-                <input type="text" v-model="cname" placeholder="Course Name">
+                <label>Course Name</label>
+                <input type="text" v-model="cname" v-bind:placeholder="course.course_name" disabled>
                 </div>
                 <div class="field">
                 <label>Start Date</label>
                     <div class="ui calendar" id="startdate_calendar" v-on:click="startdatepick">
                         <div class="ui input left icon">
                             <i class="calendar icon"></i>
-                            <input type="text" placeholder="Start Date" v-model="cstartdate" value="August 1, 2019">
+                            <input type="text" v-model="cstartdate" v-bind:placeholder="course.startDate" value="August 1, 2019">
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                     <div class="ui calendar" id="enddate_calendar" v-on:click="enddatepick">
                         <div class="ui input left icon">
                             <i class="calendar icon"></i>
-                            <input type="text" placeholder="End Date"  v-model="cenddate">
+                            <input type="text" v-bind:placeholder="course.endDate" v-model="cenddate">
                         </div>
                     </div>
                 </div>
@@ -32,11 +32,11 @@
             <div class="fields">
                 <div class="field">
                 <label>Pre-Survey Link</label>
-                <input type="text" placeholder="Pre-Survey Link" v-model="cpresurvey">
+                <input type="text" v-bind:placeholder="course.presurveylink" id="pre" v-model="cpresurvey">
                 </div>
                 <div class="field">
                 <label>Post-Survey Link</label>
-                <input type="text" placeholder="Post-Survey Link" v-model="cpostsurvey">
+                <input type="text" v-bind:placeholder="course.postsurveylink" id="post" v-model="cpostsurvey">
                 </div>      
             </div>
             <div class="fields">
@@ -69,10 +69,15 @@
 <script>
 export default {
     name: 'EditCourse',
+    props: {
+        course: {
+            type: Object,
+            required: true
+        }
+    },
     data() {
         return {
-            course: this.$store.getters.course,
-            cname: '',
+            cname: course.course_name,
             cstartdate: '',
             cenddate: '',
             cpresurvey: '',
@@ -80,6 +85,8 @@ export default {
             cassignstat: '',
             cstudents: ''
         }
+    },
+    mounted() {
     },
     methods: {
         startdatepick: function () {

@@ -11,7 +11,7 @@
             />
         </div>
         <CourseModal/>
-        <EditCourse/>
+
     </div>
 </template>
 
@@ -42,7 +42,7 @@ export default {
         // $('.column')
         // .transition('horizontal flip')
         // ;        
-    },
+   },
     methods: {
         showModal: function() {
             $('#createCourse').modal('show')
