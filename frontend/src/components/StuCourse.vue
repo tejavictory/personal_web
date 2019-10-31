@@ -69,6 +69,7 @@ export default {
             .catch(error => { 
             }) 
             this.hidden = 0
+            
             this.$router.go()
         }
     }
@@ -78,7 +79,11 @@ export default {
 
 <style scoped>
 *{
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Exo-2', sans-serif;
+}
+.header{
+    font-family: 'Exo-2', sans-serif;
+
 }
 label{
     font-weight: bold;

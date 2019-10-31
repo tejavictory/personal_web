@@ -71,7 +71,7 @@ class CourseController {
       }
     
       async update({ request, response, params: { id } }) {
-        const data = request.post()
+        const course_name = request.input()
 
         var course = Course.find(id)
         
@@ -84,7 +84,7 @@ class CourseController {
         await course.save()
     
         if (users && users.length > 0) {
-          await course.users().detach()
+          // await course.users().detach()
           await course.users().attach(users)
           course.users = await course.users().fetch()
         }

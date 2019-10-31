@@ -17,7 +17,7 @@
                     <label> Pre-Survey Link: </label> <span>{{ course.presurveylink }}</span><br/>
                     <label> Post-Survey Link: </label> <span>{{ course.postsurveylink }}</span><br/>
                     <label> Codeword Set: </label> <span>{{ course.codewordset }}</span><br/>
-                    <label> Codewords Status: </label> <span>{{ course.codewordAssignStatus }}</span><br/>
+                    <label> Codewords Status: </label> <span>{{ this.codewordAssignStatus }}</span><br/>
                 </div>
                 <div class="extra content" v-if="course.distributed != 1">
                     <button class="ui blue button fluid" v-on:click="distribute()">Distribute Codewords</button>
@@ -41,7 +41,9 @@ export default {
     data() {
         return {
             students: null,
-            codewords: null
+            codewords: null,
+            disbtn: 0,
+            codewordAssignStatus: '0/0'
         }
     },
     props: {
@@ -57,6 +59,7 @@ export default {
                 ;
                 sessionStorage.setItem('transitioncount',sessionStorage.getItem('transitioncount')+1)
         }
+        this.getUserCourses()
     },
     methods: {
         delCourse() {
@@ -119,6 +122,7 @@ export default {
                             })
                             .then(response => {
                                 console.log(response.data.data)
+                                this.codewordAssignStatus = '0/'+this.students.length
                             })
                             .catch(error => { 
                             }) 
@@ -144,6 +148,27 @@ export default {
                                         this.$router.go()
                                     })
                                     .catch(error => { 
+                                    })
+        },
+        getUserCourses() {
+            axios.get('/getusercourses',{
+            })
+            .then(response => {
+                var allusercourses = response.data.data
+                var i=0
+                var count = 0
+                var totcount = 0
+                for(i=0;i<allusercourses.length;i++){
+                    if(allusercourses[i].course_id == this.course.id){
+                        totcount++
+                        if(allusercourses[i].hidden == 0){
+                            count++
+                        }
+                    }
+                }
+                this.codewordAssignStatus = count+'/'+totcount
+            })
+            .catch(error => { 
             })   
         }
     }    
