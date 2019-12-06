@@ -92,7 +92,7 @@
         </div>
         <div class="four wide column" style="color:green;font-weight:bold;" id="upcomingcolumn">
           <strong>To be Updated Students List</strong>
-          <div class="ui segment" >
+          <div class="ui segment">
             <ol style="height:100%;overflow:scroll;" id="upcominglist">
               <!-- <li v-for="user in cstudents" :key="user" :user="user">{{ user }}</li> -->
             </ol>
@@ -107,13 +107,13 @@
           </div>
         </div>
       </div>
-        <div class="actions">
-          <!-- <div class="ui black deny button">Cancel</div> -->
-          <div class="ui positive right labeled icon fluid button" v-on:click="updateCourse">
-            Save
-            <i class="checkmark icon"></i>
-          </div>
+      <div class="actions">
+        <!-- <div class="ui black deny button">Cancel</div> -->
+        <div class="ui positive right labeled icon fluid button" v-on:click="updateCourse">
+          Save
+          <i class="checkmark icon"></i>
         </div>
+      </div>
     </div>
   </div>
 </template>
@@ -134,7 +134,7 @@ export default {
     };
   },
   mounted() {
-      $("#upcomingcolumn").hide()
+    $("#upcomingcolumn").hide();
     $("#rangestart").calendar({
       type: "date",
       endCalendar: $("#rangeend"),
@@ -181,9 +181,19 @@ export default {
       reader.onload = function(event) {
         var csvData = event.target.result;
         data = CSV.parse(csvData);
+
         if (data && data.length > 0) {
-          console.log(data[0]);
-          this.cstudents = data[0];
+          var i = 0,
+            j = 0;
+          var students = [];
+          for (i = 0; i < data.length; i++) {
+            //   console.log(data[i]);
+            for (j = 0; j < data[i].length; j++) {
+              students.push(data[i][j]);
+              // console.log(data[i][j]);
+            }
+          }
+          this.cstudents = students;
           var x = 0;
           var re = /\S+@\S+\.\S+/;
 
@@ -193,9 +203,9 @@ export default {
             }
           }
           console.log(this.cstudents);
-          $("#upcomingcolumn").show()
-          for (x = 0; x < this.cstudents.length; x++){
-              $("#upcominglist").append('<li>'+this.cstudents[x]+'</li>')
+          $("#upcomingcolumn").show();
+          for (x = 0; x < this.cstudents.length; x++) {
+            $("#upcominglist").append("<li>" + this.cstudents[x] + "</li>");
           }
           sessionStorage.setItem("addstu", data[0]);
         } else {
@@ -269,8 +279,8 @@ export default {
 .ui.form {
   padding: 20px;
 }
-.ui.segment{
-    background-color: #ecfff9; 
+.ui.segment {
+  background-color: #ecfff9;
 }
 .field {
   padding: 10px;

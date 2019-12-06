@@ -166,7 +166,7 @@ export default {
           insEmail:
             this.$store.getters.useremail ||
             sessionStorage.getItem("useremail"),
-          users: sessionStorage.getItem("addstu").split(',')
+          users: sessionStorage.getItem("addstu").split(",")
         })
         .then(response => {
           this.assignSet();
@@ -177,7 +177,7 @@ export default {
           $("body").toast({
             displayTime: 5000,
             class: "error",
-            message: "Course already exists."
+            message: "Cannot create course OR students cannot be found in database."
           });
           // this.notification = Object.assign({}, this.notification, {
           //     message: error.response.data.message,
@@ -217,9 +217,22 @@ export default {
       reader.onload = function(event) {
         var csvData = event.target.result;
         data = CSV.parse(csvData);
-        this.cstudents = data[0];
+
         if (data && data.length > 0) {
-          console.log(data[0]);
+          var i = 0,
+            j = 0;
+          var students = [];
+          for (i = 0; i < data.length; i++) {
+            //   console.log(data[i]);
+            for (j = 0; j < data[i].length; j++) {
+              students.push(data[i][j]);
+              // console.log(data[i][j]);
+            }
+          }
+          // console.log(students)
+          // this.cstudents = data[0];
+          this.cstudents = students;
+          //   console.log(data[0]);
           var x = 0;
           var re = /\S+@\S+\.\S+/;
 
@@ -228,7 +241,8 @@ export default {
               this.cstudents.splice(x, 1);
             }
           }
-          sessionStorage.setItem("addstu",this.cstudents)
+          console.log(this.cstudents);
+          sessionStorage.setItem("addstu", this.cstudents);
           document.getElementById("studentscount").innerHTML =
             this.cstudents.length + " students uploaded.";
           //   this.users = data[0];
