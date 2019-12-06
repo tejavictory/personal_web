@@ -69,7 +69,7 @@
     <div class="actions">
       <div class="ui black deny button" v-on:click="refresh()">Cancel</div>
       <div class="ui positive right labeled icon button" id="done" v-on:click="createSet">
-        Done
+        Finalize
         <i class="checkmark icon"></i>
       </div>
     </div>
