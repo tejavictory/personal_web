@@ -1,6 +1,8 @@
 <template>
   <div class="ui stackable three column centered grid container">
     <div class="column">
+          <br/>
+
       <h2 class="ui dividing header">Log In</h2>
 
       <Notification
@@ -88,7 +90,7 @@
                         this.$store.commit('changeUserEmail',this.email)
                         this.fetchAuthenticatedUser()
                         this.getRole()
-                        this.$router.push('/welcome')
+                        // this.$router.push('/welcome')
                     })
                     .catch(error => {
                         // clear form inputs
@@ -96,8 +98,8 @@
 
                         // display error notification
                         this.notification = Object.assign({}, this.notification, {
-                            message: error.response.data.message,
-                            type: error.response.data.status
+                            message: "Error logging in",
+                            type: "Login Error"
                         })
                     })
             },
@@ -128,6 +130,16 @@
                     .then(response => {
                         this.role = response.data.data.role_name
                         this.$store.commit('changeUserRole',response.data.data.role_name)
+                                switch(this.role){
+                                    case "Student": this.$router.push('/Student')
+                                                    break
+                                    case "Instructor": this.$router.push('/InsDash')
+                                                        break
+                                    case "Admin": this.$router.push('/Admin')
+                                                    break
+                                    default: this.$router.push('/')
+
+                                }
                     })
             }
         }

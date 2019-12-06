@@ -2,14 +2,13 @@
     <div>
         <br/>
         <div class="ui container">
-            <h2>Remove Users.... Under Construction</h2>
             <table class="ui single line table">
             <thead>
                 <tr>
-                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Name</th>
-                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Role</th>
-                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Email</th>
-                <th style="background-color:rgba(0, 9, 61, 0.705);color:white"></th>
+                <th style="background-color:rgb(179,179,179);color:black">Name</th>
+                <th style="background-color:rgb(179,179,179);color:black">Role</th>
+                <th style="background-color:rgb(179,179,179);color:black">Email</th>
+                <th style="background-color:rgb(179,179,179);color:black"></th>
                 </tr>
             </thead>
             <tbody>
@@ -19,7 +18,7 @@
                 <td>{{ item.firstname + ' ' + item.lastname }}</td>
                 <td>{{ item.role_name }}</td>
                 <td>{{ item.email }}</td>
-                <td><button class="ui button inverted red" v-on:click="delUser"><i class="trash alternate outline icon"></i>Delete</button></td>
+                <td><button class="ui button inverted red" v-on:click="delUser(item.id)"><i class="trash alternate outline icon"></i>Delete</button></td>
                 </tr>
             </tbody>
             </table>
@@ -39,8 +38,19 @@ export default {
         this.fetchUsers()
     },
     methods: {
-        delUser: function() {
-
+        delUser: function(id) {
+/*             axios.get('/delUser/'+id, {
+                headers: {
+                        Authorization: `Bearer ${sessionStorage.getItem('auth-token')}`
+                    }
+           }).then(response => {
+                        $('body')
+                            .toast({
+                              displayTime: 5000,
+                              class: 'success',
+                              message: 'User removed.'
+                            })
+                          ;            }) */
         },
         fetchUsers: function() {
             axios.get('/users', {
@@ -61,6 +71,6 @@ export default {
 
 <style scoped>
 tr{
-    background-color: rgb(203, 228, 250);
+        background-color: rgb(228, 228, 228);
 }
 </style>

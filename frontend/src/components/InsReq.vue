@@ -2,12 +2,11 @@
     <div>
         <br/>
         <div class="ui container">
-            <h2>Instructor Requests.... Under Construction</h2>
             <table class="ui single line table">
             <thead>
                 <tr>
-                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Username</th>
-                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Status</th>
+                <th style="background-color:rgb(179,179,179);color:black">Username</th>
+                <th style="background-color:rgb(179,179,179);color:black">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,7 +62,6 @@ export default {
                 status: 'Approved' 
             }).then(response => {
                 this.updateRole(item)
-                this.$router.go()
             })
         },
         reject: function(item) {
@@ -91,6 +89,6 @@ export default {
 </script>
 <style scoped>
 tr{
-    background-color: rgb(203, 228, 250);
+        background-color: rgb(228, 228, 228);
 }
 </style>

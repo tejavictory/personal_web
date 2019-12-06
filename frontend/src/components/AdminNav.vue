@@ -11,7 +11,7 @@
   <a class="item" v-on:click="setActive('rmusers')" :class="{ active: isActive('rmusers') }">Remove Users</a>
   <div class="right menu">
     <a class="item" v-on:click="logout">
-      Logout
+      <i class="sign-out icon"></i>
     </a>
   </div>
 </div>

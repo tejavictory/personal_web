@@ -1,6 +1,5 @@
 <template>
     <div class="ui container">
-        <p> Instructor Dashboard Construction in progress... </p>
         <div class="ui top attached button inverted" tabindex="1" v-on:click="showModal"><i class="add circle icon"></i>New Course</div>
         <br/>
         <div class="ui stackable four column grid" id="testing">            

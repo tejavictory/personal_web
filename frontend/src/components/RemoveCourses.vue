@@ -2,14 +2,13 @@
     <div>
         <br/>
         <div class="ui container">
-            <h2>Remove Courses.... Under Construction</h2>
             <table class="ui single line table">
             <thead>
                 <tr>
-                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Name</th>
-                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Instructor</th>
-                <th style="background-color:rgba(0, 9, 61, 0.705);color:white">Codewords Assigned</th>
-                <th style="background-color:rgba(0, 9, 61, 0.705);color:white"></th>
+                <th style="background-color:rgb(179,179,179);color:black">Name</th>
+                <th style="background-color:rgb(179,179,179);color:black">Instructor</th>
+                <!-- <th style="background-color:rgb(179,179,179);color:black">Codewords Assigned</th> -->
+                <th style="background-color:rgb(179,179,179);color:black"></th>
                 </tr>
             </thead>
             <tbody>
@@ -18,7 +17,7 @@
                     :user="item">
                 <td>{{ item.course_name }}</td>
                 <td>{{ item.insEmail }}</td>
-                <td>{{ item.codewordAssignStatus }}</td>
+                <!-- <td>{{ item.codewordAssignStatus }}</td> -->
                 <td><button class="ui button inverted red" v-on:click="delCourse"><i class="trash alternate outline icon"></i>Delete</button></td>
                 </tr>
             </tbody>
@@ -62,6 +61,6 @@ export default {
 <style scoped>
 
 tr{
-    background-color: rgb(203, 228, 250);
+        background-color: rgb(228, 228, 228);
 }
 </style>

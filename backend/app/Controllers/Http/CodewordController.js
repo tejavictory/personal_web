@@ -48,9 +48,10 @@ class CodewordController {
       async storeMultiple({ request, response }) {
         const words = request.input('codewords')
         const setname = request.input('codewordset_name')
-        for (word in words){
+        var i = 0
+        for (i=0;i<words.length;i++){
             const codeword = new Codeword()
-            codeword.codeword = word
+            codeword.codeword = words[i]
             codeword.codewordset_name = setname
             await codeword.save()
         }

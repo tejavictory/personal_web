@@ -15,7 +15,6 @@ class InsrequestController {
 
       async getreq({ response, params: {username} }) {
         const insrequest = await Insrequest.find(username)
-    
         response.status(200).json({
           message: 'Here is your request.',
           data: insrequest

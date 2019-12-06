@@ -11,23 +11,49 @@
                     </button>
                      
                 </div>
-                <div class="content" id="temp">
-                    <label> Start Date: </label> <span>{{ course.startDate }}</span><br/>
-                    <label> End Date: </label> <span>{{ course.endDate }}</span><br/>
-                    <label> Pre-Survey Link: </label> <span>{{ course.presurveylink }}</span><br/>
-                    <label> Post-Survey Link: </label> <span>{{ course.postsurveylink }}</span><br/>
-                    <label> Codeword Set: </label> <span>{{ course.codewordset }}</span><br/>
-                    <label> Codewords Status: </label> <span>{{ this.codewordAssignStatus }}</span><br/>
+                <div class="content">
+                    <div class="ui slide masked reveal">
+                        <div class="visible content">
+                            <div class="ui tiny statistic">
+                                <div class="value" v-if="course.codewordset!=null" style="font-family: 'Quicksand', sans-serif;">
+                                    {{ course.codewordset }}
+                                </div>
+                                <div class="value" v-else style="font-family: 'Quicksand', sans-serif;">
+                                    --
+                                </div>                                
+                                <div class="label" style="font-family: 'Quicksand', sans-serif;">
+                                    CODEWORD SET
+                                </div>
+                            </div><br/>
+                            <div class="ui tiny statistic">
+                                <div class="value" style="font-family: 'Quicksand', sans-serif;">
+                                    {{ this.codewordAssignStatus }}
+                                </div>
+                                <div class="label" style="font-family: 'Quicksand', sans-serif;">
+                                    STATUS
+                                </div>
+                            </div>
+                            <!-- <h4 style="text-decoration:underline; text-align:center;">CODEWORD SET</h4>
+                            <h4 style="text-align:center;">{{ course.codewordset }}</h4>
+                            <h4 style="text-decoration:underline; text-align:center;">STATUS</h4>
+                            <h4 style="text-align:center;">{{ this.codewordAssignStatus }}</h4> -->
+                        </div>                
+                        <div class="hidden content" id="temp">
+                            <label> Start Date: </label> <span>{{ course.startDate }}</span><br/>
+                            <label> End Date: </label> <span>{{ course.endDate }}</span><br/>
+                            <label> Pre-Survey Link: </label> <span>{{ course.presurveylink }}</span><br/>
+                            <label> Post-Survey Link: </label> <span>{{ course.postsurveylink }}</span><br/>
+                            <label> Codeword Set: </label> <span>{{ course.codewordset }}</span><br/>
+                            <label> Codewords Status: </label> <span>{{ this.codewordAssignStatus }}</span><br/>
+                        </div>
+                    </div>
                 </div>
                 <div class="extra content" v-if="course.distributed != 1">
-                    <button class="ui blue button fluid" v-on:click="distribute()">Distribute Codewords</button>
+                    <button class="ui blue button fluid" v-on:click="distribute()" style="font-family: 'Quicksand', sans-serif;">Distribute Codewords</button>
                 </div>
             </div>
-                    <EditCourse v-bind:course="course"/>
 
-    </div> 
-
-    
+    </div>
 </template>
 
 <script>
@@ -75,7 +101,9 @@ export default {
         },
         updateCourse() {
             this.$store.commit('changeCourse',this.course)
-            $('#editCourse').modal('show')
+            sessionStorage.setItem('editcourse',this.course.id)
+            // $('#editCourse').modal('show')
+            this.$router.push('/EditCourse')
         },
         distribute() {
             axios.get('/getStudents/'+this.course.id,{})
@@ -105,6 +133,7 @@ export default {
                 if(this.codewords.length>=this.students.length){
                     console.log('good')
                     var i = 0
+                    var emails = new Array()
                     var array = new Array()
                     for(i=0;i<this.codewords.length;i++){
                         array.push(this.codewords[i].id)
@@ -116,7 +145,10 @@ export default {
                             array[j] = temp
                             }
                     for(i=0;i<this.students.length;i++){
-                            axios.post('/updateUserCourse/'+this.course.id,{
+                        emails.push(this.students[i].email)
+                    }
+                    for(i=0;i<this.students.length;i++){
+/*                             axios.post('/updateUserCourse/'+this.course.id,{
                                 email: this.students[i].email,
                                 codewordid: array[i]
                             })
@@ -125,7 +157,17 @@ export default {
                                 this.codewordAssignStatus = '0/'+this.students.length
                             })
                             .catch(error => { 
-                            }) 
+                            })  */
+                            axios.post('/updateUserCourseMultiple/'+this.course.id,{
+                                emails: emails,
+                                codewordids: array
+                            })
+                            .then(response => {
+                                console.log(response.data.data)
+                                this.codewordAssignStatus = '0/'+this.students.length
+                            })
+                            .catch(error => { 
+                            })
                     }
 
                 }
@@ -145,7 +187,7 @@ export default {
 
             axios.post('/distributedwords/'+this.course.id,{})
                                     .then(response => {
-                                        this.$router.go()
+                                        // this.$router.go()
                                     })
                                     .catch(error => { 
                                     })

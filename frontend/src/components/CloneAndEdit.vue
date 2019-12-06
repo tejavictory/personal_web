@@ -2,7 +2,7 @@
   <div class="ui container segment" id="createSet">
     <!-- <i class="close icon"></i> -->
     <div class="header">
-      <h2 style="font-family: 'Quicksand', sans-serif;">Add a New Codeword Set</h2>
+      <h2 style="font-family: 'Quicksand', sans-serif;">Cloning the set</h2>
     </div>
     <!-- <div v-else class="header">
             Cloning Codewordset
@@ -38,11 +38,11 @@
           v-on:change="upload"
         />
       </div>
-      <p>OR</p>
+      <!-- <p>OR</p>
       <div class="field">
-        <label>Enter codewords seperated by commas</label>
+        <label>Enter codewords seperated by commas to append</label>
         <input type="text" id="cdwdcommas" v-on:focusout="commasgetwords" />
-      </div>
+      </div> -->
       <div class="field" id="violations">
         <div class="ui message">
           <label>Violations</label>
@@ -91,7 +91,7 @@ export default {
     // });
     // if(sessionStorage.getItem('item')!=null){
     //     this.itemprop = sessionStorage.getItem('item')
-    //     this.fetchwordsForCloning(sessionStorage.getItem('item'))
+    this.fetchwordsForCloning(sessionStorage.getItem("toclone"));
     // }
   },
   data() {
@@ -161,7 +161,7 @@ export default {
       textnode.setAttribute("autofocus", "true");
       textnode.setAttribute("maxlength", "10");
       textnode.setAttribute("class", "cdwdtextbox");
-      textnode.setAttribute("v-on:keyup.13","this.addNew()")
+      textnode.setAttribute("v-on:keyup.13", "this.addNew()");
       node.appendChild(textnode);
       document.getElementById("grid").appendChild(node);
     },
@@ -451,7 +451,7 @@ export default {
         data = CSV.parse(csvData);
         if (data && data.length > 0) {
           console.log(data[0]);
-          document.getElementById("grid").innerHTML = "";
+        //   document.getElementById("grid").innerHTML = "";
           this.codewords = data[0];
           sessionStorage.setItem("codewords", data[0]);
           var i = 0;
@@ -497,12 +497,12 @@ export default {
       }
     },
     onEnterPressed(event) {
-        console.log("Outside")
-        if(event.keyCode === 13){
-                    console.log("Inside")
+      console.log("Outside");
+      if (event.keyCode === 13) {
+        console.log("Inside");
 
-            this.addNew()
-        }
+        this.addNew();
+      }
     }
   }
 };

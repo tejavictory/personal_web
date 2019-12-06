@@ -11,7 +11,7 @@
                     <label> Post-Survey Link: </label> <span>{{ course.postsurveylink }}</span><br/>
                     <label> Codeword: </label> 
                     <button class="ui button mini inverted" v-if="hidden != 0" v-on:click="setHidden()">Reveal</button>
-                    <span v-else> {{ codeword }} </span>
+                    <span id="codeword" @click="copyToClip()" style="color:blue;" v-else> {{ codeword }} </span>
                 </div>
             </div>
     </div> 
@@ -71,6 +71,20 @@ export default {
             this.hidden = 0
             
             this.$router.go()
+        },
+        copyToClip() {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val($('#codeword').text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+             $('body')
+                            .toast({
+                              displayTime: 5000,
+                              class: 'success',
+                              message: 'Codeword copied to clipboard'
+                            })
+                          ;
         }
     }
 }

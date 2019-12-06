@@ -57,6 +57,8 @@
                     <label> Upload a CSV file instead </label>
                     <input type="file" id="fileUpload" placeholder="CSV File Upload" accept=".csv" v-on:change="upload">
                 </div>
+                <div class="field" id="studentscount">
+                </div>
             </div>
             <div class="field">
             <label>Codeword Set</label>
@@ -119,6 +121,9 @@ export default {
         $('#rangestart').calendar({
             type: 'date',
             endCalendar: $('#rangeend'),
+            onChange: function(date, text) {
+              sessionStorage.setItem("start", text);
+            },
             popupOptions: {
              observeChanges: false
             }
@@ -126,6 +131,9 @@ export default {
         $('#rangeend').calendar({
             type: 'date',
             startCalendar: $('#rangestart'),
+            onChange: function(date, text) {
+              sessionStorage.setItem("end", text);
+            },
             popupOptions: {
              observeChanges: false
             }            
@@ -140,13 +148,13 @@ export default {
         createCourse() {
             axios.post('/coursecreate',{
                 course_name: this.cname,
-                startDate: this.cstartdate,
-                endDate: this.cenddate,
+                startDate: sessionStorage.getItem('start'),
+                endDate: sessionStorage.getItem('end'),
                 presurveylink: this.cpresurvey,
                 postsurveylink: this.cpostsurvey,
                 codewordAssignStatus: this.cassignstat,
                 insEmail: this.$store.getters.useremail || sessionStorage.getItem('useremail'),
-                users: sessionStorage.getItem('addstu').split(',')
+                users: ''
             })
             .then(response => {
                 this.assignSet()
@@ -154,10 +162,17 @@ export default {
             .catch(error => {
                 // clear form inputs
              // display error notification
-                        this.notification = Object.assign({}, this.notification, {
-                            message: error.response.data.message,
-                            type: error.response.data.status
-                        })    
+                        $('body')
+                            .toast({
+                              displayTime: 5000,
+                              class: 'error',
+                              message: 'Course already exists.'
+                            })
+                          ;
+                        // this.notification = Object.assign({}, this.notification, {
+                        //     message: error.response.data.message,
+                        //     type: error.response.data.status
+                        // })    
             })
         },
         assignSet() {
@@ -170,24 +185,34 @@ export default {
             })
             .catch(error => {
                 // clear form inputs
-                        this.notification = Object.assign({}, this.notification, {
-                            message: error.response.data.message,
-                            type: error.response.data.status
-                        })  
+                        $('body')
+                            .toast({
+                              displayTime: 5000,
+                              class: 'error',
+                              message: 'Unable to assign codeword set'
+                            })
+                          ;
+                        // this.notification = Object.assign({}, this.notification, {
+                        //     message: error.response.data.message,
+                        //     type: error.response.data.status
+                        // })  
             })
         },
         upload: function (evt) {
+            var CSV = require('csv-string');
+
             var data = null;
             var file = evt.target.files[0];
             var reader = new FileReader();
             reader.readAsText(file);
             reader.onload = function(event) {
-                var csvData = event.target.result;
-                data = $.csv.toArrays(csvData);
+                var csvData = event.target.result;                
+                data = CSV.parse(csvData)
                 if (data && data.length > 0) {
                     console.log(data[0])
+                    document.getElementById('studentscount').innerHTML = data[0].length + " students uploaded."
                     this.cstudents = data[0]
-                    sessionStorage.setItem('addstu',data[0])
+                    this.users = data[0].split(',')
                 } else {
                     alert('No data to import!');
                 }
@@ -203,10 +228,17 @@ export default {
                 this.sets = response.data.data
             })
             .catch(error => {
-                this.notification = Object.assign({}, this.notification, {
-                    message: error.response.data.message,
-                    type: error.response.data.status
-                })  
+                            $('body')
+                            .toast({
+                              displayTime: 5000,
+                              class: 'error',
+                              message: 'Codeword sets cannot be displayed.'
+                            })
+                          ;
+                // this.notification = Object.assign({}, this.notification, {
+                //     message: error.response.data.message,
+                //     type: error.response.data.status
+                // })  
             })
         }    
     }

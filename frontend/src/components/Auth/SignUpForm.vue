@@ -1,6 +1,8 @@
 <template>
   <div class="ui stackable three column centered grid container">
     <div class="column">
+          <br/>
+
       <h2 class="ui dividing header">Sign Up, it's free!</h2>
 
       <Notification :message="notification.message" :type="notification.type" v-if="notification.message" />
@@ -18,12 +20,12 @@
           <span v-show="errors.has('lastname')" class="is-danger">{{ errors.first('Last Name') }}</span>
         </div>
 
-        <div class="field" :class="{ error: errors.has('username') }">
+        <!-- <div class="field" :class="{ error: errors.has('username') }">
           <label>Username</label>
           <input type="text" name="username" :class="{'input': true, 'is-danger': errors.has('username') }" v-model="username" v-validate="'required'"
             placeholder="Username">
           <span v-show="errors.has('username')" class="is-danger">{{ errors.first('username') }}</span>
-        </div>
+        </div> -->
 
         <div class="field" :class="{ error: errors.has('email') }">
           <label>Email</label>
@@ -95,7 +97,7 @@ export default {
         .post('/signup', {
           firstname: this.firstname,
           lastname: this.lastname,
-          username: this.username,
+          username: this.email.split('@')[0],
           email: this.email,
           password: this.password,
           role_name: 'Student'
@@ -126,8 +128,8 @@ export default {
         .catch(error => {
           // display error notification
           this.notification = Object.assign({}, this.notification, {
-            message: error.response.data.message,
-            type: error.response.data.status
+            message: "Error signing up.",
+            type: "Signup error"
           })
         })
     }

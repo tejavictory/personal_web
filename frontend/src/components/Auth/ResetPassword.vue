@@ -1,10 +1,14 @@
 <template>
   <div class="ui stackable three column centered grid container">
     <div class="column">
+          <br/>
+
         <!-- <h3>Reset Password</h3> -->
             <div class="field">
                 <label>Enter Your Email: </label><input type="email" v-model="email"/>
             </div>
+                <br/>
+
             <button class="ui button" v-on:click="resetpwd">Send Reset Password Link</button>
     </div>
   </div>

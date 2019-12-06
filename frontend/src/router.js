@@ -14,6 +14,9 @@ import Welcome from '@/components/Welcome'
 import CodewordSets from '@/components/CodewordSets'
 import Confirm from '@/components/Confirm'
 import ResetPwdFinal from '@/components/ResetPwdFinal'
+import EditCourse from '@/components/EditCourse'
+import AddCodewordsModal from '@/components/AddCodewordsModal.vue'
+import CloneAndEdit from '@/components/CloneAndEdit.vue'
 
 Vue.use(Router)
 
@@ -72,6 +75,18 @@ export default new Router({
         {
           path: '/Codewords',
           component: CodewordSets
+        },
+        {
+          path: '/addcdwds',
+          component: AddCodewordsModal
+        },
+        {
+          path: '/cloneedit',
+          component: CloneAndEdit
+        },
+        {
+          path: '/EditCourse',
+          component: EditCourse
         }
       ]
     },

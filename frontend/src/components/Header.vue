@@ -5,7 +5,7 @@
                     <img src="nwmsu.png"/>
               </div>
               <div class="ten wide column">
-                    <h1 style="padding-left:350px;padding-top:30px;">Codeword Application</h1>   
+                    <h1 style="padding-left:350px;padding-top:30px;">Codewords Application</h1>   
               </div>
         </div>
     </div>
@@ -14,7 +14,6 @@
 <style scoped>
     * {
         color: rgb(0, 0, 0);
-        padding: 5px;
         text-align: center;
         font-family: 'Kanit', sans-serif;
     }
@@ -25,5 +24,6 @@
     }
     .ui.segment.container.fluid{
         background-color: rgb(179, 179, 179);
+        margin: 0%;
     }
 </style>

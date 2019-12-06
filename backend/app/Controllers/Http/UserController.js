@@ -85,7 +85,7 @@ class UserController {
         const role_name = request.input('role_name')
 
         const user = await User.findBy('username',username)
-        
+        console.log(user)
         user.role_name = role_name
         await user.save()
     
@@ -118,8 +118,8 @@ class UserController {
       async mailConfirmation({ request, response, params: {email} }) {
         const Mail = use('Mail')
         const token = request.input('usertoken')
-        // '<html><body>Click the following link to confirm your email and activate your codewords app account. <button onclick="activate()">Please click here</button><script>function activate() {var http = new XMLHttpRequest();var url = \'http://localhost:3333/activate\';http.open(\'POST\', url,true);http.setRequestHeader(\'Authorization\', `Bearer ${'+token+'}`);http.onreadystatechange = function() {if(http.readyState == 4 && http.status == 200) {alert(http.responseText);}}http.send();}</script></body><html>'
-        await Mail.raw('<html><body><a href="http://localhost:8080/#/confirm/'+token+'">Click Here</a></body></html>', (message) => {
+        // '<html><body>Click the following link to confirm your email and activate your codewords app account. <button onclick="activate()">Please click here</button><script>function activate() {var http = new XMLHttpRequest();var url = \'https://codewordcreed.herokuapp.com/activate\';http.open(\'POST\', url,true);http.setRequestHeader(\'Authorization\', `Bearer ${'+token+'}`);http.onreadystatechange = function() {if(http.readyState == 4 && http.status == 200) {alert(http.responseText);}}http.send();}</script></body><html>'
+        await Mail.raw('<html><body><a href="https://objective-colden-380a8f.netlify.com/#/confirm/'+token+'">Click Here</a></body></html>', (message) => {
           message.from('codewordsapp@gmail.com', 'Codewords Application')
           message.to(email)
         })
@@ -133,8 +133,8 @@ class UserController {
         const Mail = use('Mail')
         const user = await User.find(email)
         const token = await auth.generate(user)
-        // '<html><body>Click the following link to confirm your email and activate your codewords app account. <button onclick="activate()">Please click here</button><script>function activate() {var http = new XMLHttpRequest();var url = \'http://localhost:3333/activate\';http.open(\'POST\', url,true);http.setRequestHeader(\'Authorization\', `Bearer ${'+token+'}`);http.onreadystatechange = function() {if(http.readyState == 4 && http.status == 200) {alert(http.responseText);}}http.send();}</script></body><html>'
-        await Mail.raw('<html><body><a href="http://localhost:8080/#/reset/'+token.token+'">Click Here to reset your password.</a></body></html>', (message) => {
+        // '<html><body>Click the following link to confirm your email and activate your codewords app account. <button onclick="activate()">Please click here</button><script>function activate() {var http = new XMLHttpRequest();var url = \'https://codewordcreed.herokuapp.com/activate\';http.open(\'POST\', url,true);http.setRequestHeader(\'Authorization\', `Bearer ${'+token+'}`);http.onreadystatechange = function() {if(http.readyState == 4 && http.status == 200) {alert(http.responseText);}}http.send();}</script></body><html>'
+        await Mail.raw('<html><body><a href="https://objective-colden-380a8f.netlify.com/#/reset/'+token.token+'">Click Here to reset your password.</a></body></html>', (message) => {
           message.from('codewordsapp@gmail.com', 'Codewords Application')
           message.to(email)
         })

@@ -17,7 +17,7 @@
     </a></router-link>
   <div class="right menu">
     <a class="item" v-on:click="logout">
-      Logout
+      <i class="fas fa-sign-out-alt"></i>Logout
     </a>
   </div>
 </div>

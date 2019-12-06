@@ -15,7 +15,7 @@
             <div class="content" style="background-color:rgb(228, 228, 228);color:black">
                 <div class="ui segment">
                     <strong>Count: </strong>{{words.length}}
-                    <button class="ui button inverted" style="color:black" v-on:click="showModal()">CLONE & EDIT</button>
+                    <button class="ui button inverted" v-on:click="cloneAndEdit(item)" style="font-family: 'Quicksand', sans-serif;">CLONE & EDIT</button>
                 </div>
                 <div class="ui grid">
                     <div class="four wide column" v-for="word in words"
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <AddCodewordsModal/>
+        <!-- <AddCodewordsModal/> -->
     </div>
 </template>
 
@@ -50,16 +50,17 @@ export default {
             sessionStorage.setItem('item',item.name)
         },
         showModal: function() {
-            $('#createSet').modal({
-                onHide: function(){
-                },
-                onShow: function(){
-                }
-                // onApprove: function() {
-                //     console.log('Approve');
-                //     return validateModal()
-                // }
-            }).modal('show')
+            // $('#createSet').modal({
+            //     onHide: function(){
+            //     },
+            //     onShow: function(){
+            //     }
+            //     // onApprove: function() {
+            //     //     console.log('Approve');
+            //     //     return validateModal()
+            //     // }
+            // }).modal('show')
+            this.$router.push('/addcdwds')
         },
         fetchSets() {
             axios.get('/getsets', {
@@ -88,6 +89,10 @@ export default {
                 this.cloneCreate(item)
                 // console.log(document.getElementById('accord').childNodes[0].className)
             ;
+        },
+        cloneAndEdit(item) {
+            sessionStorage.setItem("toclone",item.name)
+            this.$router.push('/cloneedit')
         }
     }
 }
