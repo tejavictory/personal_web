@@ -66,8 +66,10 @@
         </button>
       </div>
     </div>
+        Hit validate to remove hard rule violations. You may have to do it multiple times.
+
     <div class="actions">
-      <div class="ui black deny button" v-on:click="refresh()">Cancel</div>
+      <!-- <div class="ui black deny button" v-on:click="refresh()">Cancel</div> -->
       <div class="ui positive right labeled icon button" id="done" v-on:click="createSet">
         Finalize
         <i class="checkmark icon"></i>

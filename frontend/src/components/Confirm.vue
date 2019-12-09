@@ -1,7 +1,7 @@
 <template>
     <div class="ui container">
         Activate your account
-        <button class="ui button inverted" v-on:click="activate()">Activate</button>
+        <button class="ui button" v-on:click="activate()">Activate</button>
     </div>
 </template>
 

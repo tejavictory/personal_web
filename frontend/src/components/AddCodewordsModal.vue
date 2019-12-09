@@ -66,8 +66,9 @@
         </button>
       </div>
     </div>
+    Hit validate to remove hard rule violations. You may have to do it multiple times.
     <div class="actions">
-      <div class="ui black deny button" v-on:click="refresh()">Cancel</div>
+      <!-- <div class="ui black deny button" v-on:click="refresh()">Cancel</div> -->
       <div class="ui positive right labeled icon button" id="done" v-on:click="createSet">
         Finalize
         <i class="checkmark icon"></i>
@@ -161,7 +162,7 @@ export default {
       textnode.setAttribute("autofocus", "true");
       textnode.setAttribute("maxlength", "10");
       textnode.setAttribute("class", "cdwdtextbox");
-      textnode.setAttribute("v-on:keyup.13","this.addNew()")
+      // textnode.setAttribute("v-on:change","validateWords()");
       node.appendChild(textnode);
       document.getElementById("grid").appendChild(node);
     },

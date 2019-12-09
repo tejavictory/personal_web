@@ -98,7 +98,7 @@
 
                         // display error notification
                         this.notification = Object.assign({}, this.notification, {
-                            message: "Error logging in",
+                            message: "Invalid Login Credentials",
                             type: "Login Error"
                         })
                     })

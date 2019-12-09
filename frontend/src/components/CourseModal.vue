@@ -155,6 +155,12 @@ export default {
     },
     formatStudents: function() {},
     createCourse() {
+      var stu;
+      if (sessionStorage.getItem("addstu") === null) {
+        stu = null;
+      } else {
+        stu = sessionStorage.getItem("addstu").split(",");
+      }
       axios
         .post("/coursecreate", {
           course_name: this.cname,
@@ -166,18 +172,22 @@ export default {
           insEmail:
             this.$store.getters.useremail ||
             sessionStorage.getItem("useremail"),
-          users: sessionStorage.getItem("addstu").split(",")
+          users: stu
         })
         .then(response => {
+          if (this.cset == "" || this.cset == null) {
+            this.$router.go();
+          }
           this.assignSet();
         })
         .catch(error => {
+          console.log(error.message);
           // clear form inputs
           // display error notification
           $("body").toast({
             displayTime: 5000,
             class: "error",
-            message: "Cannot create course OR students cannot be found in database."
+            message: "Students not in database or Course aready exists."
           });
           // this.notification = Object.assign({}, this.notification, {
           //     message: error.response.data.message,

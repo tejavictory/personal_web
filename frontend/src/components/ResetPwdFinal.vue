@@ -52,6 +52,7 @@ export default {
                               message: 'Your password has been reset.'
                             })
                           ;
+                          this.$router.push('/login')
                       })
         }
     }

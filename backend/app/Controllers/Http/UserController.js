@@ -119,7 +119,7 @@ class UserController {
         const Mail = use('Mail')
         const token = request.input('usertoken')
         // '<html><body>Click the following link to confirm your email and activate your codewords app account. <button onclick="activate()">Please click here</button><script>function activate() {var http = new XMLHttpRequest();var url = \'https://codewordcreed.herokuapp.com/activate\';http.open(\'POST\', url,true);http.setRequestHeader(\'Authorization\', `Bearer ${'+token+'}`);http.onreadystatechange = function() {if(http.readyState == 4 && http.status == 200) {alert(http.responseText);}}http.send();}</script></body><html>'
-        await Mail.raw('<html><body><a href="https://objective-colden-380a8f.netlify.com/#/confirm/'+token+'">Click Here</a></body></html>', (message) => {
+        await Mail.raw('<html><body><a href="https://objective-colden-380a8f.netlify.com/#/confirm/'+token+'">Click Here</a> to activate your account.</body></html>', (message) => {
           message.from('codewordsapp@gmail.com', 'Codewords Application')
           message.to(email)
         })

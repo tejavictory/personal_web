@@ -8,7 +8,7 @@ class CodewordsetSchema extends Schema {
     this.create('codewordsets', (table) => {
       table.increments()
       table.string('name',100).notNullable().unique()
-      table.string('creator',20).notNullable()
+      table.string('creator',20).notNullable() // ALTERED IN DATABASE
       table.string('type',10).notNullable()
       table.timestamps()
     })

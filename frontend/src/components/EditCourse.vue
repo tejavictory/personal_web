@@ -88,10 +88,33 @@
                 />
               </div>
             </div>
+            <div class="field">
+              <label>Codeword Set</label>
+              <div class="ui selection dropdown">
+                <input
+                  type="hidden"
+                  id="setname"
+                  name="codewordsets"
+                  v-model="cset"
+                  @change="getsetname()"
+                />
+                <i class="dropdown icon"></i>
+                <div class="default text">Codeword Sets</div>
+                <div class="menu">
+                  <span
+                    class="item"
+                    v-for="setitem in sets"
+                    :key="setitem.name"
+                    :set="setitem"
+                    data-value="setitem.name"
+                  >{{ setitem.name }}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="four wide column" style="color:green;font-weight:bold;" id="upcomingcolumn">
-          <strong>To be Updated Students List</strong>
+          <strong>New Enrollments</strong>
           <div class="ui segment">
             <ol style="height:100%;overflow:scroll;" id="upcominglist">
               <!-- <li v-for="user in cstudents" :key="user" :user="user">{{ user }}</li> -->
@@ -99,10 +122,12 @@
           </div>
         </div>
         <div class="four wide column">
-          <strong>Existing Students List</strong>
+          <strong>Current Enrollments</strong>
+          <br/>
+          *Note: Students will not be displayed if they are not registered.
           <div class="ui segment">
             <ol style="height:100%;overflow:scroll;">
-              <li v-for="user in course.users" :key="user.email" :user="user">{{ user.email }}</li>
+              <li v-for="user in course.users" :key="user" :user="user">{{ user }}</li>
             </ol>
           </div>
         </div>
@@ -130,11 +155,19 @@ export default {
       cpresurvey: "",
       cpostsurvey: "",
       cassignstat: "",
-      cstudents: ""
+      cstudents: "",
+      sets: "",
+      cset: ""
     };
   },
   mounted() {
+    this.showsets();
+
+    $(function() {
+      $(".ui.selection.dropdown").dropdown();
+    });
     $("#upcomingcolumn").hide();
+
     $("#rangestart").calendar({
       type: "date",
       endCalendar: $("#rangeend"),
@@ -158,6 +191,32 @@ export default {
     this.getCourse();
   },
   methods: {
+    getsetname() {
+      this.cset = $(".ui.selection.dropdown").dropdown("get text");
+    },
+    assignSet() {
+        console.log(this.cset)
+      axios
+        .post("/assignSet/" + this.course.course_name, {
+          setname: this.cset
+        })
+        .then(response => {
+          // redirect to user home
+          this.$router.go();
+        })
+        .catch(error => {
+          // clear form inputs
+          $("body").toast({
+            displayTime: 5000,
+            class: "error",
+            message: "Unable to assign codeword set"
+          });
+          // this.notification = Object.assign({}, this.notification, {
+          //     message: error.response.data.message,
+          //     type: error.response.data.status
+          // })
+        });
+    },
     startdatepick: function() {
       $("#startdate_calendar").calendar({ type: "date" });
     },
@@ -216,14 +275,39 @@ export default {
         alert("Unable to read " + file.fileName);
       };
     },
+    showsets: function() {
+      axios
+        .get("/getsets", {})
+        .then(response => {
+          this.sets = response.data.data;
+        })
+        .catch(error => {
+          $("body").toast({
+            displayTime: 5000,
+            class: "error",
+            message: "Codeword sets cannot be displayed."
+          });
+          // this.notification = Object.assign({}, this.notification, {
+          //     message: error.response.data.message,
+          //     type: error.response.data.status
+          // })
+        });
+    },
     updateCourse() {
+      var stu;
+      if(sessionStorage.getItem("addstu")===null) {
+        stu = null
+      }
+      else{
+        stu = sessionStorage.getItem("addstu").split(',')
+      }
       axios
         .put("/courseupdate/" + this.course.id, {
           startDate: sessionStorage.getItem("start"),
           endDate: sessionStorage.getItem("end"),
           presurveylink: this.cpresurvey,
           postsurveylink: this.cpostsurvey,
-          users: sessionStorage.getItem("addstu").split(",")
+          users: stu
         })
         .then(response => {
           // redirect to user home
@@ -232,7 +316,12 @@ export default {
             class: "success",
             message: "Course Updated"
           });
-          this.$router.go();
+          if(this.cset==""||this.cset==null){
+            this.$router.go()
+            return
+          }
+          this.assignSet()
+        //   this.$router.go();
         })
         .catch(error => {
           $("body").toast({

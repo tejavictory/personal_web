@@ -9,8 +9,8 @@ import '../semantic/dist/semantic.js'
 import * as CSV from 'csv-string';
 
 window.axios = axios
-axios.defaults.baseURL = 'http://127.0.0.1:3333'
-// axios.defaults.baseURL = 'https://codewordcreed.herokuapp.com'
+// axios.defaults.baseURL = 'http://127.0.0.1:3333'
+axios.defaults.baseURL = 'https://codewordcreed.herokuapp.com'
 
 Vue.config.productionTip = false
 Vue.use(VeeValidate)

@@ -1,6 +1,8 @@
 'use strict'
 
 const Course = use('App/Models/Course')
+const Database = use('Database')
+const User = use('App/Models/User')
 
 class CourseController {
   async index({ response }) {
@@ -43,8 +45,19 @@ class CourseController {
   async show({ request, response, params: { id } }) {
     const course = await Course.find(id)
 
-    const users = await course.users().fetch()
-
+    // const users = await course.users().fetch()
+    const students = await Database
+      .from('user_course')
+      .where('course_id', '=', course.id)
+      .select('email')
+    var users = []
+    var x = 0
+    for (x = 0; x < students.length; x++) {
+      // const user = await User.find(students[x].email)
+      // users.push(user)
+      const user = students[x].email
+      users.push(user)
+    }
     course.users = users
 
     response.status(200).json({
@@ -63,10 +76,22 @@ class CourseController {
 
   async getStudents({ request, response, params: { id } }) {
     const course = await Course.find(id)
-    const students = await course.users().fetch()
+    // const students = await course.users().fetch()
+
+    const students = await Database
+      .from('user_course')
+      .where('course_id', '=', course.id)
+      .select('email')
+    var users = []
+    var x = 0
+    for (x = 0; x < students.length; x++) {
+      const user = await User.find(students[x].email)
+      users.push(user)
+    }
+
     response.status(200).json({
       message: 'Here are your students.',
-      data: students
+      data: users
     })
   }
 
@@ -87,9 +112,9 @@ class CourseController {
     await course.save()
 
     if (users && users.length > 0) {
-        await course.users().detach()
-        await course.users().attach(users)
-        course.users = await course.users().fetch()
+      await course.users().detach()
+      await course.users().attach(users)
+      course.users = await course.users().fetch()
     }
 
     response.status(200).json({
