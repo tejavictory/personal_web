@@ -61,6 +61,8 @@
         </button>
       </div>
       <div class="field">
+        <button class="ui button black" v-on:click="goBack()">BACK</button>
+
         <button class="ui button green" v-on:click="validateWords" style="float:right;">
           <i class="check icon"></i>Validate
         </button>
@@ -107,6 +109,9 @@ export default {
     };
   },
   methods: {
+    goBack() {
+      this.$router.push("/Admin");
+    },
     fetchwordsForCloning(name) {
       axios
         .get("/getWordsSet/" + name, {
@@ -370,7 +375,7 @@ export default {
                 class: "success",
                 message: "Codeword set created."
               });
-              this.$router.push("/Codewords");
+              this.$router.push("/Admin");
             })
             .catch(error => {
               // clear form inputs
@@ -466,7 +471,8 @@ export default {
           console.log(data[0]);
           //   document.getElementById("grid").innerHTML = "";
           // this.codewords = data[0];
-          var i=0,j=0;
+          var i = 0,
+            j = 0;
           var codewords = [];
           for (i = 0; i < data.length; i++) {
             //   console.log(data[i]);

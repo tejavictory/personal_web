@@ -124,7 +124,7 @@
         <div class="four wide column">
           <strong>Current Enrollments</strong>
           <br/>
-          *Note: Students will not be displayed if they are not registered.
+          <!-- *Note: Students will not be displayed if they are not registered. -->
           <div class="ui segment">
             <ol style="height:100%;overflow:scroll;">
               <li v-for="user in course.users" :key="user" :user="user">{{ user }}</li>
@@ -198,11 +198,11 @@ export default {
         console.log(this.cset)
       axios
         .post("/assignSet/" + this.course.course_name, {
-          setname: this.cset
+          setname: this.cset.trim()
         })
         .then(response => {
           // redirect to user home
-          this.$router.go();
+          this.$router.push('/InsDash');
         })
         .catch(error => {
           // clear form inputs
@@ -317,7 +317,7 @@ export default {
             message: "Course Updated"
           });
           if(this.cset==""||this.cset==null){
-            this.$router.go()
+            this.$router.push('/InsDash')
             return
           }
           this.assignSet()

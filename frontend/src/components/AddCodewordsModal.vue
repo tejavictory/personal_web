@@ -1,83 +1,84 @@
 <template>
-  <div class="ui container segment" id="createSet">
-    <!-- <i class="close icon"></i> -->
-    <div class="header">
-      <h2 style="font-family: 'Quicksand', sans-serif;">Add a New Codeword Set</h2>
-    </div>
-    <!-- <div v-else class="header">
+    <div class="ui container segment" id="createSet">
+      <!-- <i class="close icon"></i> -->
+      <div class="header">
+        <h2 style="font-family: 'Quicksand', sans-serif;">Add a New Codeword Set</h2>
+      </div>
+      <!-- <div v-else class="header">
             Cloning Codewordset
-    </div>-->
-    <div class="ui form" @submit.prevent="createSet">
-      <div class="fields">
+      </div>-->
+      <div class="ui form" @submit.prevent="createSet">
+        <div class="fields">
+          <div class="field">
+            <label>Codeword Set Name</label>
+            <input
+              type="text"
+              data-tooltip="testing"
+              placeholder="Codeword Set Name"
+              v-model="csname"
+              @change="validateName()"
+            />
+          </div>
+          <div class="field" id="nameerr">
+            <label></label>
+            <i class="close icon red"></i>Name is not available
+          </div>
+          <div class="field" id="validname">
+            <label></label>
+            <i class="check icon green"></i>Name is available
+          </div>
+        </div>
         <div class="field">
-          <label>Codeword Set Name</label>
+          <label>Upload a CSV file containing codewords</label>
           <input
-            type="text"
-            data-tooltip="testing"
-            placeholder="Codeword Set Name"
-            v-model="csname"
-            @change="validateName()"
+            type="file"
+            id="fileUpload"
+            placeholder="CSV File Upload"
+            accept=".csv"
+            v-on:change="upload"
           />
         </div>
-        <div class="field" id="nameerr">
-          <label></label>
-          <i class="close icon red"></i>Name is not available
+        <p>OR</p>
+        <div class="field">
+          <label>Enter codewords seperated by commas</label>
+          <input type="text" id="cdwdcommas" v-on:focusout="commasgetwords" />
         </div>
-        <div class="field" id="validname">
-          <label></label>
-          <i class="check icon green"></i>Name is available
+        <div class="field" id="violations">
+          <div class="ui message">
+            <label>Violations</label>
+            <ul>
+              <li>Hard rule violations: {{ this.hardcount }}</li>
+              <li>Soft rule violations: {{ this.softcount }}</li>
+              <li>SOFT RULE VIOLATIONS ARE INDICATED IN RED TEXT. You can choose to override these and create the set.</li>
+              <li>HARD RULE VIOLATIONS ARE INDICATED IN RED BACKGROUND. You cannot create a set unless you change these.</li>
+            </ul>
+          </div>
         </div>
-      </div>
-      <div class="field">
-        <label>Upload a CSV file containing codewords</label>
-        <input
-          type="file"
-          id="fileUpload"
-          placeholder="CSV File Upload"
-          accept=".csv"
-          v-on:change="upload"
-        />
-      </div>
-      <p>OR</p>
-      <div class="field">
-        <label>Enter codewords seperated by commas</label>
-        <input type="text" id="cdwdcommas" v-on:focusout="commasgetwords" />
-      </div>
-      <div class="field" id="violations">
-        <div class="ui message">
-          <label>Violations</label>
-          <ul>
-            <li>Hard rule violations: {{ this.hardcount }}</li>
-            <li>Soft rule violations: {{ this.softcount }}</li>
-            <li>SOFT RULE VIOLATIONS ARE INDICATED IN RED TEXT. You can choose to override these and create the set.</li>
-            <li>HARD RULE VIOLATIONS ARE INDICATED IN RED BACKGROUND. You cannot create a set unless you change these.</li>
-          </ul>
+        <div class="ui stackable grid" id="grid"></div>
+        <div class="field">
+          <button class="ui button blue" v-on:click="addNew">
+            <i class="plus icon"></i>New Codeword
+          </button>
         </div>
-      </div>
-      <div class="ui stackable grid" id="grid"></div>
-      <div class="field">
-        <button class="ui button blue" v-on:click="addNew">
-          <i class="plus icon"></i>New Codeword
-        </button>
-      </div>
-      <div class="field">
-        <button class="ui button fluid green" v-on:click="validateWords">
-          <i class="check icon"></i>Validate
-        </button>
+        <div class="field">
+          <button class="ui button green" v-on:click="validateWords" style="float:right;">
+            <i class="check icon"></i>Validate
+          </button>
+        </div>
+      </div>Hit validate to remove hard rule violations. You may have to do it multiple times.
+      <div class="actions">
+        <!-- <div class="ui black deny button" v-on:click="refresh()">Cancel</div> -->
+        <div class="ui positive right labeled icon fluid button" id="done" v-on:click="createSet">
+          Finalize
+          <i class="checkmark icon"></i>
+        </div>
       </div>
     </div>
-    Hit validate to remove hard rule violations. You may have to do it multiple times.
-    <div class="actions">
-      <!-- <div class="ui black deny button" v-on:click="refresh()">Cancel</div> -->
-      <div class="ui positive right labeled icon button" id="done" v-on:click="createSet">
-        Finalize
-        <i class="checkmark icon"></i>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
+import AdminNav from '@/components/AdminNav.vue'
+
 export default {
   name: "CourseModal",
   mounted() {
@@ -185,17 +186,19 @@ export default {
       }
       this.codewords = words;
       for (i = 0; i < words.length - 1; i++) {
+        if (words[i].trim() == "" || words[i] == null) {
+          document
+            .getElementById("grid")
+            .removeChild(document.getElementById("grid").childNodes[i]);
+        }
         for (j = i + 1; j < words.length; j++) {
-          if (words[i] == "" || words[j] == null) {
-            document
-              .getElementById("grid")
-              .removeChild(document.getElementById("grid").childNodes[i]);
+          if (words[j].trim() == "" || words[j] == null) {
             document
               .getElementById("grid")
               .removeChild(document.getElementById("grid").childNodes[j]);
           }
           //hard rule
-          if (this.compareTwoStrings(words[i], words[j]) > 0.7) {
+          if (this.compareTwoStrings(words[i], words[j]) > 0.9) {
             document.getElementById("grid").childNodes[
               i
             ].childNodes[0].style.color = "#ffffff";
@@ -215,7 +218,7 @@ export default {
                 document
                   .getElementById("grid")
                   .childNodes[i].getAttribute("data-tooltip") +
-                  "Hard rule: Word Similarity more than 70% with " +
+                  "Hard rule: Word Similarity more than 90% with " +
                   words[j] +
                   " "
               );
@@ -329,6 +332,12 @@ export default {
       }
       if (this.validwords == "yes" && this.validname == "yes") {
         $("#done").show();
+      } else if (this.validwords == "yes") {
+        $("body").toast({
+          displayTime: 5000,
+          class: "error",
+          message: "Enter a name for codeword set."
+        });
       } else {
         $("#done").hide();
       }
@@ -358,7 +367,12 @@ export default {
             })
             .then(response => {
               console.log("done adding words");
-              this.$router.go();
+              $("body").toast({
+                displayTime: 5000,
+                class: "success",
+                message: "Codeword set created."
+              });
+              this.$router.push("/Codewords");
             })
             .catch(error => {
               // clear form inputs
@@ -453,7 +467,19 @@ export default {
         if (data && data.length > 0) {
           console.log(data[0]);
           document.getElementById("grid").innerHTML = "";
-          this.codewords = data[0];
+          var i = 0,
+            j = 0;
+          var codewords = [];
+          for (i = 0; i < data.length; i++) {
+            //   console.log(data[i]);
+            for (j = 0; j < data[i].length; j++) {
+              codewords.push(data[i][j]);
+              // console.log(data[i][j]);
+            }
+          }
+
+          this.codewords = codewords;
+          // this.codewords = data[0];
           sessionStorage.setItem("codewords", data[0]);
           var i = 0;
           for (i = 0; i < this.codewords.length; i++) {
@@ -498,12 +524,12 @@ export default {
       }
     },
     onEnterPressed(event) {
-        console.log("Outside")
-        if(event.keyCode === 13){
-                    console.log("Inside")
+      console.log("Outside");
+      if (event.keyCode === 13) {
+        console.log("Inside");
 
-            this.addNew()
-        }
+        this.addNew();
+      }
     }
   }
 };

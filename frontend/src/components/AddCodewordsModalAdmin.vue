@@ -2,7 +2,7 @@
   <div class="ui container segment" id="createSet">
     <!-- <i class="close icon"></i> -->
     <div class="header">
-      <h2 style="font-family: 'Quicksand', sans-serif;">Cloning the set</h2>
+      <h2 style="font-family: 'Quicksand', sans-serif;">Add a New Codeword Set</h2>
     </div>
     <!-- <div v-else class="header">
             Cloning Codewordset
@@ -28,7 +28,7 @@
           <i class="check icon green"></i>Name is available
         </div>
       </div>
-      <!-- <div class="field">
+      <div class="field">
         <label>Upload a CSV file containing codewords</label>
         <input
           type="file"
@@ -37,12 +37,12 @@
           accept=".csv"
           v-on:change="upload"
         />
-      </div>-->
-      <!-- <p>OR</p>
+      </div>
+      <p>OR</p>
       <div class="field">
-        <label>Enter codewords seperated by commas to append</label>
+        <label>Enter codewords seperated by commas</label>
         <input type="text" id="cdwdcommas" v-on:focusout="commasgetwords" />
-      </div>-->
+      </div>
       <div class="field" id="violations">
         <div class="ui message">
           <label>Violations</label>
@@ -61,6 +61,8 @@
         </button>
       </div>
       <div class="field">
+        <button class="ui button black" v-on:click="goBack()">BACK</button>
+
         <button class="ui button green" v-on:click="validateWords" style="float:right;">
           <i class="check icon"></i>Validate
         </button>
@@ -68,6 +70,7 @@
     </div>Hit validate to remove hard rule violations. You may have to do it multiple times.
     <div class="actions">
       <!-- <div class="ui black deny button" v-on:click="refresh()">Cancel</div> -->
+
       <div class="ui positive right labeled icon fluid button" id="done" v-on:click="createSet">
         Finalize
         <i class="checkmark icon"></i>
@@ -91,7 +94,7 @@ export default {
     // });
     // if(sessionStorage.getItem('item')!=null){
     //     this.itemprop = sessionStorage.getItem('item')
-    this.fetchwordsForCloning(sessionStorage.getItem("toclone"));
+    //     this.fetchwordsForCloning(sessionStorage.getItem('item'))
     // }
   },
   data() {
@@ -107,6 +110,9 @@ export default {
     };
   },
   methods: {
+    goBack() {
+      this.$router.push("/Admin");
+    },
     fetchwordsForCloning(name) {
       axios
         .get("/getWordsSet/" + name, {
@@ -161,7 +167,7 @@ export default {
       textnode.setAttribute("autofocus", "true");
       textnode.setAttribute("maxlength", "10");
       textnode.setAttribute("class", "cdwdtextbox");
-      textnode.setAttribute("v-on:keyup.13", "this.addNew()");
+      // textnode.setAttribute("v-on:change","validateWords()");
       node.appendChild(textnode);
       document.getElementById("grid").appendChild(node);
     },
@@ -370,7 +376,7 @@ export default {
                 class: "success",
                 message: "Codeword set created."
               });
-              this.$router.push("/Codewords");
+              this.$router.push("/Admin");
             })
             .catch(error => {
               // clear form inputs
@@ -464,9 +470,9 @@ export default {
         data = CSV.parse(csvData);
         if (data && data.length > 0) {
           console.log(data[0]);
-          //   document.getElementById("grid").innerHTML = "";
-          // this.codewords = data[0];
-          var i=0,j=0;
+          document.getElementById("grid").innerHTML = "";
+          var i = 0,
+            j = 0;
           var codewords = [];
           for (i = 0; i < data.length; i++) {
             //   console.log(data[i]);
@@ -475,9 +481,10 @@ export default {
               // console.log(data[i][j]);
             }
           }
-          this.codewords = codewords;
-          sessionStorage.setItem("codewords", codewords);
 
+          this.codewords = codewords;
+          // this.codewords = data[0];
+          sessionStorage.setItem("codewords", data[0]);
           var i = 0;
           for (i = 0; i < this.codewords.length; i++) {
             var node = document.createElement("div");

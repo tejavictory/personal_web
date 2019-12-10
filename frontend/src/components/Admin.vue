@@ -8,7 +8,7 @@
 <script>
 import AdminNav from '@/components/AdminNav.vue'
 import InsReq from '@/components/InsReq.vue'
-import CodewordSets from '@/components/CodewordSets.vue'
+import CodewordSetsAdmin from '@/components/CodewordSetsAdmin.vue'
 import RemoveCourses from '@/components/RemoveCourses.vue'
 import RemoveUsers from '@/components/RemoveUsers.vue'
 
@@ -16,13 +16,13 @@ export default {
     name: 'Admin',
     data() {
         return {  
-            dynamicComponent: CodewordSets
+            dynamicComponent: CodewordSetsAdmin
         }
     },
     mounted() {
         this.$root.$on('AdminNavContent',(menuItem)=>{
             if (menuItem=='codeword'){
-                this.dynamicComponent = CodewordSets
+                this.dynamicComponent = CodewordSetsAdmin
             }
             if (menuItem=='insreq'){
                 this.dynamicComponent = InsReq

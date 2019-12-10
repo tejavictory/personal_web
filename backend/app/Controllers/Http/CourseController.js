@@ -85,10 +85,11 @@ class CourseController {
     var users = []
     var x = 0
     for (x = 0; x < students.length; x++) {
-      const user = await User.find(students[x].email)
-      users.push(user)
+      // const user = await User.find(students[x].email)
+      const useremail = students[x].email
+      users.push(useremail)
     }
-
+    console.log(users)
     response.status(200).json({
       message: 'Here are your students.',
       data: users

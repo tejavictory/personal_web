@@ -12,12 +12,14 @@ import InsDash from '@/components/InsDash'
 import Secure from '@/components/Secure'
 import Welcome from '@/components/Welcome'
 import CodewordSets from '@/components/CodewordSets'
+import CodewordSetsAdmin from '@/components/CodewordSetsAdmin'
 import Confirm from '@/components/Confirm'
 import ResetPwdFinal from '@/components/ResetPwdFinal'
 import EditCourse from '@/components/EditCourse'
 import AddCodewordsModal from '@/components/AddCodewordsModal.vue'
 import CloneAndEdit from '@/components/CloneAndEdit.vue'
-
+import AddCodewordsModalAdmin from '@/components/AddCodewordsModalAdmin.vue'
+import CloneAndEditAdmin from '@/components/CloneAndEditAdmin.vue'
 Vue.use(Router)
 
 
@@ -99,8 +101,20 @@ export default new Router({
       component: Admin
     },    
     {
+      path: '/addcdwdsadmin',
+      component: AddCodewordsModalAdmin
+    },
+    {
+      path: '/cloneeditadmin',
+      component: CloneAndEditAdmin
+    },
+    {
       path: '/welcome',
       component: Welcome
+    }, 
+    {
+      path: '/codewordsadmin',
+      component: CodewordSetsAdmin
     }, 
     {
       path: '/about',

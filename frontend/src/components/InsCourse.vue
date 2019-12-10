@@ -135,7 +135,14 @@ export default {
             return;
           }
         })
-        .catch(error => {});
+        .catch(error => {
+
+           $("body").toast({
+              displayTime: 5000,
+              class: "error",
+              message: "error."
+            });
+        });
     },
     getWordsAndContinue() {
       axios
@@ -157,10 +164,10 @@ export default {
               array[j] = temp;
             }
             for (i = 0; i < this.students.length; i++) {
-              emails.push(this.students[i].email);
+              emails.push(this.students[i]);
             }
             for (i = 0; i < this.students.length; i++) {
-              /*                             axios.post('/updateUserCourse/'+this.course.id,{
+              /*            axios.post('/updateUserCourse/'+this.course.id,{
                                 email: this.students[i].email,
                                 codewordid: array[i]
                             })

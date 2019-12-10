@@ -43,16 +43,16 @@
         </div>
       </div>
       <div class="fields">
-        <div class="field">
+        <!-- <div class="field">
           <label>Add Students to the Course</label>
           <div class="ui left icon input">
             <input type="text" id="cstu" placeholder="Add Students..." v-model="cstudents" />
             <i class="users icon"></i>
           </div>
-        </div>
+        </div> -->
 
         <div class="field">
-          <label>Upload a CSV file instead</label>
+          <label>Upload a CSV file of Students emails</label>
           <input
             type="file"
             id="fileUpload"
